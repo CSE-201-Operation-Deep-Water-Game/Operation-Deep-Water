@@ -31,8 +31,8 @@ class FinalLevel(Level):
             introText=introText,
             complete=complete,
         )
-        self._artifactX: int = artifactX
-        self._artifactY: int = artifactY
+        self.artifactX: int = artifactX
+        self.artifactY: int = artifactY
 
     def handleMove(self, person: person_module.Person, direction: str) -> str:
         """TODO: Implement handleMove."""

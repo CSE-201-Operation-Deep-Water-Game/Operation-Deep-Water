@@ -27,8 +27,8 @@ class WallEvent(BaseEvent):
             isRepeatable=isRepeatable,
             hasBeenTriggered=hasBeenTriggered,
         )
-        self._blockMessage: str = blockMessage
-        self._energyPenalty: int = energyPenalty
+        self.blockMessage: str = blockMessage
+        self.energyPenalty: int = energyPenalty
 
     def play(self, person: person_module.Person, level: level_module.Level) -> str:
         """TODO: Implement play."""

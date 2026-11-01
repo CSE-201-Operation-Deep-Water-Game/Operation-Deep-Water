@@ -34,10 +34,10 @@ class PuzzleLevel(Level):
             introText=introText,
             complete=complete,
         )
-        self._puzzles: dict[str, puzzle_module.Puzzle] = puzzles
-        self._solvedOrder: list[str] = solvedOrder
-        self._validOrders: list[list[str]] = validOrders
-        self._wrongOrderCost: int = wrongOrderCost
+        self.puzzles: dict[str, puzzle_module.Puzzle] = puzzles
+        self.solvedOrder: list[str] = solvedOrder
+        self.validOrders: list[list[str]] = validOrders
+        self.wrongOrderCost: int = wrongOrderCost
 
     def handleMove(self, person: person_module.Person, direction: str) -> str:
         """TODO: Implement handleMove."""

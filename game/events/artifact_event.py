@@ -26,7 +26,7 @@ class ArtifactEvent(BaseEvent):
             isRepeatable=isRepeatable,
             hasBeenTriggered=hasBeenTriggered,
         )
-        self._endingText: str = endingText
+        self.endingText: str = endingText
 
     def play(self, person: person_module.Person, level: level_module.Level) -> str:
         """TODO: Implement play."""

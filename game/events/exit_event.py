@@ -27,8 +27,8 @@ class ExitEvent(BaseEvent):
             isRepeatable=isRepeatable,
             hasBeenTriggered=hasBeenTriggered,
         )
-        self._levelIndex: int = levelIndex
-        self._successText: str = successText
+        self.levelIndex: int = levelIndex
+        self.successText: str = successText
 
     def play(self, person: person_module.Person, level: level_module.Level) -> str:
         """TODO: Implement play."""

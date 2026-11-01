@@ -26,7 +26,7 @@ class LandmarkEvent(BaseEvent):
             isRepeatable=isRepeatable,
             hasBeenTriggered=hasBeenTriggered,
         )
-        self._landmarkText: str = landmarkText
+        self.landmarkText: str = landmarkText
 
     def play(self, person: person_module.Person, level: level_module.Level) -> str:
         """TODO: Implement play."""

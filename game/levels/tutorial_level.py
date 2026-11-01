@@ -30,7 +30,7 @@ class TutorialLevel(Level):
             introText=introText,
             complete=complete,
         )
-        self._hints: list[str] = hints
+        self.hints: list[str] = hints
 
     def handleMove(self, person: person_module.Person, direction: str) -> str:
         """TODO: Implement handleMove."""

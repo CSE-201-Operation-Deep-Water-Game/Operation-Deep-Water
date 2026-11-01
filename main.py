@@ -1,7 +1,4 @@
-"""Game entry module; re-exports classes from their individual modules.
-
-Gameplay methods remain scaffolding until implemented.
-"""
+"""Construct the game's dependencies and start its controller."""
 
 from game.commands.command import Command
 from game.commands.command_parser import CommandParser
@@ -48,3 +45,56 @@ __all__ = [
     "WallEvent",
     "WaveRoom",
 ]
+
+def main() -> None:
+    player = Person(energyAmt=10, maxEnergy=10, positionX=5, positionY=0)
+    parser = CommandParser(
+        validVerbs={
+            "move": "move",
+            "look": "look",
+            "help": "help",
+            "status": "status",
+            "quit": "quit",
+        }
+    )
+    ui = TerminalInterface(parser=parser)
+    checkpoints = CheckpointManager(passwords={})
+
+    width, height = 6, 3
+    grid = [
+        [
+            Tile(
+                x=x,
+                y=y,
+                tileType="exit" if (x, y) == (0, height - 1) else "open",
+                event=None,
+                landmark="",
+            )
+            for x in range(width)
+        ]
+        for y in range(height)
+    ]
+
+    tutorial = TutorialLevel(
+        name="Tutorial",
+        map=Map(grid=grid, width=width, height=height),
+        startX=5,
+        startY=0,
+        introText="Welcome to Operation Deep Water. Find your way to the exit.",
+        complete=False,
+        hints=["Use move north, south, east, or west to explore."],
+    )
+    game_controller = GameController(
+        person=player,
+        levels=[tutorial],
+        currentLevel=tutorial,
+        ui=ui,
+        checkpoints=checkpoints,
+        running=False,
+    )
+
+    game_controller.start()
+
+
+if __name__ == "__main__":
+    main()

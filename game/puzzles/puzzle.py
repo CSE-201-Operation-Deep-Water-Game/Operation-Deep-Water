@@ -18,11 +18,11 @@ class Puzzle:
         solved: bool,
         mapChanges: list[tuple[int, int, str]],
     ) -> None:
-        self._puzzleId: str = puzzleId
-        self._description: str = description
-        self._solution: str = solution
-        self._solved: bool = solved
-        self._mapChanges: list[tuple[int, int, str]] = mapChanges
+        self.puzzleId: str = puzzleId
+        self.description: str = description
+        self.solution: str = solution
+        self.solved: bool = solved
+        self.mapChanges: list[tuple[int, int, str]] = mapChanges
 
     def attempt(self, input: str) -> bool:
         """TODO: Implement attempt."""

@@ -14,7 +14,7 @@ class CommandParser:
         *,
         validVerbs: dict[str, str],
     ) -> None:
-        self._validVerbs: dict[str, str] = validVerbs
+        self.validVerbs: dict[str, str] = validVerbs
 
     def parse(self, raw: str) -> command_module.Command:
         """TODO: Implement parse."""

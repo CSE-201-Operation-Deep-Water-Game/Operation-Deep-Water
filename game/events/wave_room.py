@@ -27,8 +27,8 @@ class WaveRoom(BaseEvent):
             isRepeatable=isRepeatable,
             hasBeenTriggered=hasBeenTriggered,
         )
-        self._direction: str = direction
-        self._strength: int = strength
+        self.direction: str = direction
+        self.strength: int = strength
 
     def play(self, person: person_module.Person, level: level_module.Level) -> str:
         """TODO: Implement play."""

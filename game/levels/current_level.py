@@ -31,7 +31,7 @@ class CurrentLevel(Level):
             introText=introText,
             complete=complete,
         )
-        self._wave: wave_room_module.WaveRoom = wave
+        self.wave: wave_room_module.WaveRoom = wave
 
     def handleMove(self, person: person_module.Person, direction: str) -> str:
         """TODO: Implement handleMove."""

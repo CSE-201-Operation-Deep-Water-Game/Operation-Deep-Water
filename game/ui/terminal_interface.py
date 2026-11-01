@@ -14,7 +14,7 @@ class TerminalInterface:
         *,
         parser: command_parser_module.CommandParser,
     ) -> None:
-        self._parser: command_parser_module.CommandParser = parser
+        self.parser: command_parser_module.CommandParser = parser
 
     def print(self, text: str) -> None:
         """TODO: Implement print."""

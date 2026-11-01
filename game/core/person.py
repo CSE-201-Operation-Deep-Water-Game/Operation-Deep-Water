@@ -14,10 +14,10 @@ class Person:
         positionX: int,
         positionY: int,
     ) -> None:
-        self._energyAmt: int = energyAmt
-        self._maxEnergy: int = maxEnergy
-        self._positionX: int = positionX
-        self._positionY: int = positionY
+        self.energyAmt: int = energyAmt
+        self.maxEnergy: int = maxEnergy
+        self.positionX: int = positionX
+        self.positionY: int = positionY
 
     def move(self, dx: int, dy: int) -> None:
         """TODO: Implement move."""

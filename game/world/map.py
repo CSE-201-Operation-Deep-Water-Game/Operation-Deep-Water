@@ -16,9 +16,9 @@ class Map:
         width: int,
         height: int,
     ) -> None:
-        self._grid: list[list[tile_module.Tile]] = grid
-        self._width: int = width
-        self._height: int = height
+        self.grid: list[list[tile_module.Tile]] = grid
+        self.width: int = width
+        self.height: int = height
 
     def getTile(self, x: int, y: int) -> tile_module.Tile:
         """TODO: Implement getTile."""

@@ -20,11 +20,11 @@ class Tile:
         event: base_event_module.BaseEvent | None,
         landmark: str,
     ) -> None:
-        self._x: int = x
-        self._y: int = y
-        self._tileType: str = tileType
-        self._event: base_event_module.BaseEvent | None = event
-        self._landmark: str = landmark
+        self.x: int = x
+        self.y: int = y
+        self.tileType: str = tileType
+        self.event: base_event_module.BaseEvent | None = event
+        self.landmark: str = landmark
 
     def isPassable(self) -> bool:
         """TODO: Implement isPassable."""

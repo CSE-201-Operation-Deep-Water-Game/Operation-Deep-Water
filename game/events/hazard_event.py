@@ -27,8 +27,8 @@ class HazardEvent(BaseEvent):
             isRepeatable=isRepeatable,
             hasBeenTriggered=hasBeenTriggered,
         )
-        self._damage: int = damage
-        self._crashMessage: str = crashMessage
+        self.damage: int = damage
+        self.crashMessage: str = crashMessage
 
     def play(self, person: person_module.Person, level: level_module.Level) -> str:
         """TODO: Implement play."""

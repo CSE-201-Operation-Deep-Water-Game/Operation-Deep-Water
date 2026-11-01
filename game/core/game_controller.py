@@ -8,6 +8,7 @@ import game.core.checkpoint_manager as checkpoint_manager_module
 import game.core.person as person_module
 import game.levels.level as level_module
 import game.ui.terminal_interface as terminal_interface_module
+from game.levels import tutorial_level
 
 
 class GameController:
@@ -23,20 +24,29 @@ class GameController:
         checkpoints: checkpoint_manager_module.CheckpointManager,
         running: bool,
     ) -> None:
-        self._person: person_module.Person = person
-        self._levels: list[level_module.Level] = levels
-        self._currentLevel: level_module.Level = currentLevel
-        self._ui: terminal_interface_module.TerminalInterface = ui
-        self._checkpoints: checkpoint_manager_module.CheckpointManager = checkpoints
-        self._running: bool = running
+        self.person: person_module.Person = person
+        self.levels: list[level_module.Level] = levels
+        self.currentLevel: level_module.Level = currentLevel
+        self.ui: terminal_interface_module.TerminalInterface = ui
+        self.checkpoints: checkpoint_manager_module.CheckpointManager = checkpoints
+        self.running: bool = running
 
     def start(self) -> None:
-        """TODO: Implement start."""
-        raise NotImplementedError("GameController.start is not implemented yet")
+        self.ui.showBriefing()
+        self.person.resetEnergy()
+
+        self.currentLevel = self.levels[0]
+        intro = self.currentLevel.start(self.person)
+        self.ui.print(intro)
+
+        self.running = True
+        self.run()
 
     def run(self) -> None:
-        """TODO: Implement run."""
-        raise NotImplementedError("GameController.run is not implemented yet")
+        while self.running:
+            raw = self.ui.prompt()
+            command = self.ui.parser.parse(raw)
+            self.handleCommand(command)
 
     def handleCommand(self, cmd: command_module.Command) -> None:
         """TODO: Implement handleCommand."""

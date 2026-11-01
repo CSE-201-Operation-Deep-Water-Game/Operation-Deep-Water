@@ -21,12 +21,12 @@ class Level(ABC):
         introText: str,
         complete: bool,
     ) -> None:
-        self._name: str = name
-        self._map: map_module.Map = map
-        self._startX: int = startX
-        self._startY: int = startY
-        self._introText: str = introText
-        self._complete: bool = complete
+        self.name: str = name
+        self.map: map_module.Map = map
+        self.startX: int = startX
+        self.startY: int = startY
+        self.introText: str = introText
+        self.complete: bool = complete
 
     def start(self, person: person_module.Person) -> str:
         """TODO: Implement start."""

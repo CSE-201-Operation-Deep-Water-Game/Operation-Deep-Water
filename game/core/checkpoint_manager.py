@@ -11,7 +11,7 @@ class CheckpointManager:
         *,
         passwords: dict[str, int],
     ) -> None:
-        self._passwords: dict[str, int] = passwords
+        self.passwords: dict[str, int] = passwords
 
     def award(self, levelIndex: int) -> str:
         """TODO: Implement award."""

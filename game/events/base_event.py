@@ -19,10 +19,10 @@ class BaseEvent(ABC):
         isRepeatable: bool,
         hasBeenTriggered: bool,
     ) -> None:
-        self._name: str = name
-        self._description: str = description
-        self._isRepeatable: bool = isRepeatable
-        self._hasBeenTriggered: bool = hasBeenTriggered
+        self.name: str = name
+        self.description: str = description
+        self.isRepeatable: bool = isRepeatable
+        self.hasBeenTriggered: bool = hasBeenTriggered
 
     @abstractmethod
     def play(self, person: person_module.Person, level: level_module.Level) -> str:
