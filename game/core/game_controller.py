@@ -39,6 +39,10 @@ class GameController:
             raw = self.ui.prompt()
             command = self.ui.parser.parse(raw)
             self.handleCommand(command)
+            if self.currentLevel.complete:
+                self.ui.print("You reached the exit.")
+                self.running = False
+                self.advanceLevel()
 
     def handleCommand(self, cmd: command_module.Command) -> None:
         if cmd.verb == "move":

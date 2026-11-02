@@ -41,7 +41,3 @@ class Level(ABC):
 
     def markComplete(self) -> None:
         self.complete = True
-
-    def reset(self, person: "person_module.Person") -> None:
-        """TODO: Implement reset."""
-        raise NotImplementedError("Level.reset is not implemented yet")

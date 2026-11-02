@@ -10,7 +10,6 @@ from game.events.base_event import BaseEvent
 from game.events.exit_event import ExitEvent
 from game.events.hazard_event import HazardEvent
 from game.events.landmark_event import LandmarkEvent
-from game.events.wall_event import WallEvent
 from game.events.wave_room import WaveRoom
 from game.levels.current_level import CurrentLevel
 from game.levels.final_level import FinalLevel
