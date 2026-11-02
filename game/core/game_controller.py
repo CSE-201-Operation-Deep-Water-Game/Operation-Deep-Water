@@ -55,8 +55,13 @@ class GameController:
         raise NotImplementedError("GameController.loadCheckpoint is not implemented yet")
 
     def advanceLevel(self) -> None:
-        """TODO: Implement advanceLevel."""
-        raise NotImplementedError("GameController.advanceLevel is not implemented yet")
+        currentLevelIndex = self.levels.index(self.currentLevel)
+        if currentLevelIndex < len(self.levels) - 1:
+            self.currentLevel = self.levels[currentLevelIndex + 1]
+            self.ui.print(self.currentLevel.start(self.person))
+            self.person.resetEnergy()
+        else:
+            self.endGame(won=True)      
 
     def handleDeath(self) -> None:
         self.ui.print("You died! Your energy reached zero.")

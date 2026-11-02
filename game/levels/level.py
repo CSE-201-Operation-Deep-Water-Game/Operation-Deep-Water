@@ -37,12 +37,10 @@ class Level(ABC):
         raise NotImplementedError("Level.describe is not implemented yet")
 
     def isComplete(self) -> bool:
-        """TODO: Implement isComplete."""
-        raise NotImplementedError("Level.isComplete is not implemented yet")
+        return self.complete
 
     def markComplete(self) -> None:
-        """TODO: Implement markComplete."""
-        raise NotImplementedError("Level.markComplete is not implemented yet")
+        self.complete = True
 
     def reset(self, person: "person_module.Person") -> None:
         """TODO: Implement reset."""
