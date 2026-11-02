@@ -12,10 +12,6 @@ class Person:
         self.positionX: int = positionX
         self.positionY: int = positionY
 
-    def move(self, dx: int, dy: int) -> None:
-        """TODO: Implement move."""
-        raise NotImplementedError("Person.move is not implemented yet")
-
     def setPosition(self, x: int, y: int) -> None:
         self.positionX = x
         self.positionY = y
