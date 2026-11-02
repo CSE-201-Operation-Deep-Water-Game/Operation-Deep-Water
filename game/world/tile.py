@@ -10,7 +10,7 @@ class Tile:
         x: int,
         y: int,
         tileType: str,
-        event: base_event_module.BaseEvent | None,
+        event: "base_event_module.BaseEvent | None",
         landmark: str,
     ) -> None:
         self.x: int = x
@@ -26,7 +26,7 @@ class Tile:
         """TODO: Implement setType."""
         raise NotImplementedError("Tile.setType is not implemented yet")
 
-    def setEvent(self, event: base_event_module.BaseEvent) -> None:
+    def setEvent(self, event: "base_event_module.BaseEvent") -> None:
         """TODO: Implement setEvent."""
         raise NotImplementedError("Tile.setEvent is not implemented yet")
 
@@ -34,6 +34,6 @@ class Tile:
         """TODO: Implement getDescription."""
         raise NotImplementedError("Tile.getDescription is not implemented yet")
 
-    def trigger(self, person: person_module.Person, level: level_module.Level) -> str:
+    def trigger(self, person: "person_module.Person", level: "level_module.Level") -> str:
         """TODO: Implement trigger."""
         raise NotImplementedError("Tile.trigger is not implemented yet")

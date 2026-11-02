@@ -9,7 +9,7 @@ class Level(ABC):
         self,
         *,
         name: str,
-        map: map_module.Map,
+        map: "map_module.Map",
         startX: int,
         startY: int,
         introText: str,
@@ -22,17 +22,17 @@ class Level(ABC):
         self.introText: str = introText
         self.complete: bool = complete
 
-    def start(self, person: person_module.Person) -> str:
+    def start(self, person: "person_module.Person") -> str:
         person.setPosition(self.startX, self.startY)
         self.complete = False
         return self.introText
 
     @abstractmethod
-    def handleMove(self, person: person_module.Person, direction: str) -> str:
+    def handleMove(self, person: "person_module.Person", direction: str) -> str:
         """TODO: Implement handleMove."""
         raise NotImplementedError("Level.handleMove is not implemented yet")
 
-    def describe(self, person: person_module.Person) -> str:
+    def describe(self, person: "person_module.Person") -> str:
         """TODO: Implement describe."""
         raise NotImplementedError("Level.describe is not implemented yet")
 
@@ -44,6 +44,6 @@ class Level(ABC):
         """TODO: Implement markComplete."""
         raise NotImplementedError("Level.markComplete is not implemented yet")
 
-    def reset(self, person: person_module.Person) -> None:
+    def reset(self, person: "person_module.Person") -> None:
         """TODO: Implement reset."""
         raise NotImplementedError("Level.reset is not implemented yet")

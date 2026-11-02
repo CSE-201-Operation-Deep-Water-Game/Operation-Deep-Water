@@ -19,7 +19,7 @@ class BaseEvent(ABC):
         self.hasBeenTriggered: bool = hasBeenTriggered
 
     @abstractmethod
-    def play(self, person: person_module.Person, level: level_module.Level) -> str:
+    def play(self, person: "person_module.Person", level: "level_module.Level") -> str:
         """TODO: Implement play."""
         raise NotImplementedError("BaseEvent.play is not implemented yet")
 
