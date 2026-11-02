@@ -29,4 +29,4 @@ class Person:
         return self.energyAmt <= 0
 
     def resetEnergy(self) -> None:
-        energy = self.maxEnergy
+        self.energyAmt = self.maxEnergy

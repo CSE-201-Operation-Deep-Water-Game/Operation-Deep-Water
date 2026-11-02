@@ -43,6 +43,10 @@ class GameController:
     def handleCommand(self, cmd: command_module.Command) -> None:
         if cmd.verb == "move":
             self.ui.print(self.currentLevel.handleMove(self.person, cmd.arg))
+
+            if self.person.isDead():
+                self.handleDeath()
+
         elif cmd.verb == "status":
             self.ui.print("ENERGY: " + str(self.person.getEnergy()))
 
@@ -55,8 +59,31 @@ class GameController:
         raise NotImplementedError("GameController.advanceLevel is not implemented yet")
 
     def handleDeath(self) -> None:
-        """TODO: Implement handleDeath."""
-        raise NotImplementedError("GameController.handleDeath is not implemented yet")
+        self.ui.print("You died! Your energy reached zero.")
+
+        while True:
+            self.ui.print("Would you like to restart? (yes/no)")
+            choice = self.ui.prompt().strip().lower()
+
+            if choice in ("yes", "y"):
+                self.person.resetEnergy()
+
+                for level in self.levels:
+                    level.complete = False
+
+                self.currentLevel = self.levels[0]
+                self.ui.showBriefing()
+                self.ui.print(self.currentLevel.start(self.person))
+
+                self.running = True
+                return
+
+            if choice in ("no", "n"):
+                self.ui.print("Thanks for playing!")
+                self.running = False
+                return
+
+            self.ui.print("Please enter yes or no.")
 
     def endGame(self, won: bool) -> None:
         """TODO: Implement endGame."""
