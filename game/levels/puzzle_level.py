@@ -1,7 +1,3 @@
-"""PuzzleLevel scaffolding from the class diagram."""
-
-from __future__ import annotations
-
 from game.levels.level import Level
 
 import game.core.person as person_module
@@ -10,8 +6,6 @@ import game.world.map as map_module
 
 
 class PuzzleLevel(Level):
-    """Scaffold for PuzzleLevel from the class diagram."""
-
     def __init__(
         self,
         *,

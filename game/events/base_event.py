@@ -1,7 +1,3 @@
-"""BaseEvent scaffolding from the class diagram."""
-
-from __future__ import annotations
-
 from abc import ABC, abstractmethod
 
 import game.core.person as person_module
@@ -9,8 +5,6 @@ import game.levels.level as level_module
 
 
 class BaseEvent(ABC):
-    """Scaffold for BaseEvent from the class diagram."""
-
     def __init__(
         self,
         *,

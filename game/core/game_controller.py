@@ -1,19 +1,11 @@
-"""GameController scaffolding from the class diagram."""
-
-from __future__ import annotations
-
-
 import game.commands.command as command_module
 import game.core.checkpoint_manager as checkpoint_manager_module
 import game.core.person as person_module
 import game.levels.level as level_module
 import game.ui.terminal_interface as terminal_interface_module
-from game.levels import tutorial_level
 
 
 class GameController:
-    """Scaffold for GameController from the class diagram."""
-
     def __init__(
         self,
         *,
@@ -49,8 +41,10 @@ class GameController:
             self.handleCommand(command)
 
     def handleCommand(self, cmd: command_module.Command) -> None:
-        """TODO: Implement handleCommand."""
-        raise NotImplementedError("GameController.handleCommand is not implemented yet")
+        if cmd.verb == "move":
+            self.ui.print(self.currentLevel.handleMove(self.person, cmd.arg))
+        elif cmd.verb == "status":
+            self.ui.print("ENERGY: " + str(self.person.getEnergy()))
 
     def loadCheckpoint(self, password: str) -> bool:
         """TODO: Implement loadCheckpoint."""

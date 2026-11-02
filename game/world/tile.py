@@ -1,16 +1,9 @@
-"""Tile scaffolding from the class diagram."""
-
-from __future__ import annotations
-
-
 import game.core.person as person_module
 import game.events.base_event as base_event_module
 import game.levels.level as level_module
 
 
 class Tile:
-    """Scaffold for Tile from the class diagram."""
-
     def __init__(
         self,
         *,
@@ -27,8 +20,7 @@ class Tile:
         self.landmark: str = landmark
 
     def isPassable(self) -> bool:
-        """TODO: Implement isPassable."""
-        raise NotImplementedError("Tile.isPassable is not implemented yet")
+        return self.tileType != "wall"
 
     def setType(self, tileType: str) -> None:
         """TODO: Implement setType."""

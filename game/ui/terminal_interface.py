@@ -1,14 +1,7 @@
-"""TerminalInterface scaffolding from the class diagram."""
-
-from __future__ import annotations
-
-
 import game.commands.command_parser as command_parser_module
 
 
 class TerminalInterface:
-    """Scaffold for TerminalInterface from the class diagram."""
-
     def __init__(
         self,
         *,
@@ -17,16 +10,20 @@ class TerminalInterface:
         self.parser: command_parser_module.CommandParser = parser
 
     def print(self, text: str) -> None:
-        """TODO: Implement print."""
-        raise NotImplementedError("TerminalInterface.print is not implemented yet")
+        print(text)
 
     def prompt(self) -> str:
-        """TODO: Implement prompt."""
-        raise NotImplementedError("TerminalInterface.prompt is not implemented yet")
+        return input("> ")
 
     def showBriefing(self) -> None:
-        """TODO: Implement showBriefing."""
-        raise NotImplementedError("TerminalInterface.showBriefing is not implemented yet")
+        self.print(
+            "=== Operation Deep Water ===\n"
+            "Your mission: explore the underwater facility and recover the artifact.\n"
+            "Find each level's exit to continue. Watch for walls and hazards.\n"
+            "Each successful move costs energy. If your energy reaches zero, you die.\n"
+            "\n"
+            "To move, enter: move up, move down, move left, or move right.\n"
+        )
 
     def askNewOrPassword(self) -> str:
         """TODO: Implement askNewOrPassword."""

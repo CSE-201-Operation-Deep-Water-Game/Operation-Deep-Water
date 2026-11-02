@@ -1,14 +1,7 @@
-"""Puzzle scaffolding from the class diagram."""
-
-from __future__ import annotations
-
-
 import game.world.map as map_module
 
 
 class Puzzle:
-    """Scaffold for Puzzle from the class diagram."""
-
     def __init__(
         self,
         *,

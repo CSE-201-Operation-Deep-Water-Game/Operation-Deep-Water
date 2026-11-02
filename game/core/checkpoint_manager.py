@@ -1,11 +1,4 @@
-"""CheckpointManager scaffolding from the class diagram."""
-
-from __future__ import annotations
-
-
 class CheckpointManager:
-    """Scaffold for CheckpointManager from the class diagram."""
-
     def __init__(
         self,
         *,

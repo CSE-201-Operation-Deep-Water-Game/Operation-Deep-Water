@@ -1,7 +1,3 @@
-"""TutorialLevel scaffolding from the class diagram."""
-
-from __future__ import annotations
-
 from game.levels.level import Level
 
 import game.core.person as person_module
@@ -9,8 +5,6 @@ import game.world.map as map_module
 
 
 class TutorialLevel(Level):
-    """Scaffold for TutorialLevel from the class diagram."""
-
     def __init__(
         self,
         *,
@@ -33,8 +27,31 @@ class TutorialLevel(Level):
         self.hints: list[str] = hints
 
     def handleMove(self, person: person_module.Person, direction: str) -> str:
-        """TODO: Implement handleMove."""
-        raise NotImplementedError("TutorialLevel.handleMove is not implemented yet")
+        directions = {
+            "up": (0, 1),
+            "down": (0, -1),
+            "left": (-1, 0),
+            "right": (1, 0),
+        }
+        if direction not in directions:
+            return "Invalid direction."
+
+        dx, dy = directions[direction]
+        x, y = person.positionX + dx, person.positionY + dy
+        if not self.map.inBounds(x, y) or not self.map.isPassable(x, y):
+            person.decreaseEnergy(1)
+            return "You bumped into a wall."
+
+        person.setPosition(x, y)
+        person.decreaseEnergy(1)
+
+        if self.map.getTile(x, y).tileType == "exit":
+            self.markComplete()
+            return "You reached the exit."
+
+
+        return "You moved."
+
 
     def getHint(self) -> str:
         """TODO: Implement getHint."""

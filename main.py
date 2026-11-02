@@ -47,7 +47,8 @@ __all__ = [
 ]
 
 def main() -> None:
-    player = Person(energyAmt=10, maxEnergy=10, positionX=5, positionY=0)
+    startX, startY = 6, 1
+    player = Person(energyAmt=20, maxEnergy=20, positionX=startX, positionY=startY)
     parser = CommandParser(
         validVerbs={
             "move": "move",
@@ -60,13 +61,23 @@ def main() -> None:
     ui = TerminalInterface(parser=parser)
     checkpoints = CheckpointManager(passwords={})
 
-    width, height = 6, 3
+    width, height = 8, 5
+    walls = {
+        (3, 0), (3, 1),
+        (5, 1), (6, 2),
+        (2, 2), (5, 2),
+        (1, 3), (4, 3), (5, 3),
+    }
     grid = [
         [
             Tile(
                 x=x,
                 y=y,
-                tileType="exit" if (x, y) == (0, height - 1) else "open",
+                tileType=(
+                    "wall" if (x, y) in walls
+                    else "exit" if (x, y) == (0, height - 1)
+                    else "open"
+                ),
                 event=None,
                 landmark="",
             )
@@ -78,11 +89,11 @@ def main() -> None:
     tutorial = TutorialLevel(
         name="Tutorial",
         map=Map(grid=grid, width=width, height=height),
-        startX=5,
-        startY=0,
+        startX=startX,
+        startY=startY,
         introText="Welcome to Operation Deep Water. Find your way to the exit.",
         complete=False,
-        hints=["Use move north, south, east, or west to explore."],
+        hints=["Use move up, down, left, or right to explore."],
     )
     game_controller = GameController(
         person=player,

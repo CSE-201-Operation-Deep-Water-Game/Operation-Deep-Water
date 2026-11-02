@@ -1,11 +1,4 @@
-"""Command scaffolding from the class diagram."""
-
-from __future__ import annotations
-
-
 class Command:
-    """Scaffold for Command from the class diagram."""
-
     def __init__(
         self,
         *,

@@ -1,7 +1,3 @@
-"""Level scaffolding from the class diagram."""
-
-from __future__ import annotations
-
 from abc import ABC, abstractmethod
 
 import game.core.person as person_module
@@ -9,8 +5,6 @@ import game.world.map as map_module
 
 
 class Level(ABC):
-    """Scaffold for Level from the class diagram."""
-
     def __init__(
         self,
         *,
@@ -29,8 +23,9 @@ class Level(ABC):
         self.complete: bool = complete
 
     def start(self, person: person_module.Person) -> str:
-        """TODO: Implement start."""
-        raise NotImplementedError("Level.start is not implemented yet")
+        person.setPosition(self.startX, self.startY)
+        self.complete = False
+        return self.introText
 
     @abstractmethod
     def handleMove(self, person: person_module.Person, direction: str) -> str:

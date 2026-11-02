@@ -1,14 +1,7 @@
-"""Map scaffolding from the class diagram."""
-
-from __future__ import annotations
-
-
 import game.world.tile as tile_module
 
 
 class Map:
-    """Scaffold for Map from the class diagram."""
-
     def __init__(
         self,
         *,
@@ -21,17 +14,19 @@ class Map:
         self.height: int = height
 
     def getTile(self, x: int, y: int) -> tile_module.Tile:
-        """TODO: Implement getTile."""
-        raise NotImplementedError("Map.getTile is not implemented yet")
+        if not self.inBounds(x, y):
+            raise IndexError(f"Tile position ({x}, {y}) is outside the map.")
+        return self.grid[y][x]
 
     def setTile(self, x: int, y: int, tile: tile_module.Tile) -> None:
-        """TODO: Implement setTile."""
-        raise NotImplementedError("Map.setTile is not implemented yet")
+        if not self.inBounds(x, y):
+            raise IndexError(f"Tile position ({x}, {y}) is outside the map.")
+        tile.x = x
+        tile.y = y
+        self.grid[y][x] = tile
 
     def inBounds(self, x: int, y: int) -> bool:
-        """TODO: Implement inBounds."""
-        raise NotImplementedError("Map.inBounds is not implemented yet")
+        return 0 <= x < self.width and 0 <= y < self.height
 
     def isPassable(self, x: int, y: int) -> bool:
-        """TODO: Implement isPassable."""
-        raise NotImplementedError("Map.isPassable is not implemented yet")
+        return self.getTile(x, y).isPassable()
