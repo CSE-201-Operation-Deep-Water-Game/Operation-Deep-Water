@@ -56,6 +56,7 @@ def main() -> None:
             "help": "help",
             "status": "status",
             "quit": "quit",
+            "end": "end",
         }
     )
     ui = TerminalInterface(parser=parser)

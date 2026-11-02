@@ -50,6 +50,10 @@ class GameController:
         elif cmd.verb == "status":
             self.ui.print("ENERGY: " + str(self.person.getEnergy()))
 
+        elif cmd.verb in ("end", "quit"):
+            self.ui.print("Thanks for playing!")
+            self.running = False
+
     def loadCheckpoint(self, password: str) -> bool:
         """TODO: Implement loadCheckpoint."""
         raise NotImplementedError("GameController.loadCheckpoint is not implemented yet")
