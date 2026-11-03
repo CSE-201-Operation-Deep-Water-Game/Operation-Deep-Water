@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import game.commands.command as command_module
 
 

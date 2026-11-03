@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import game.world.tile as tile_module
 
 
@@ -5,7 +7,7 @@ class Map:
     def __init__(
         self,
         *,
-        grid: "list[list[tile_module.Tile]]",
+        grid: list[list[tile_module.Tile]],
         width: int,
         height: int,
     ) -> None:
@@ -13,12 +15,12 @@ class Map:
         self.width: int = width
         self.height: int = height
 
-    def getTile(self, x: int, y: int) -> "tile_module.Tile":
+    def getTile(self, x: int, y: int) -> tile_module.Tile:
         if not self.inBounds(x, y):
             raise IndexError(f"Tile position ({x}, {y}) is outside the map.")
         return self.grid[y][x]
 
-    def setTile(self, x: int, y: int, tile: "tile_module.Tile") -> None:
+    def setTile(self, x: int, y: int, tile: tile_module.Tile) -> None:
         if not self.inBounds(x, y):
             raise IndexError(f"Tile position ({x}, {y}) is outside the map.")
         tile.x = x

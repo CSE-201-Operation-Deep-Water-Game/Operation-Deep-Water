@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import game.commands.command_parser as command_parser_module
 
 

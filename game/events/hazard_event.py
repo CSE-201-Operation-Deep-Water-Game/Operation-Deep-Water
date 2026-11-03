@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from game.events.base_event import BaseEvent
 
 import game.core.person as person_module

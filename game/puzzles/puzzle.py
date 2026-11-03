@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import game.world.map as map_module
 
 

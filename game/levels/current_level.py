@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from game.levels.level import Level
 
 import game.core.person as person_module
