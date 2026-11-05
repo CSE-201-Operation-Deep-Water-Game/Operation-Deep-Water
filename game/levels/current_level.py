@@ -3,7 +3,6 @@ from __future__ import annotations
 from game.levels.level import Level
 
 import game.core.person as person_module
-import game.events.wave_room as wave_room_module
 import game.world.map as map_module
 
 
@@ -17,7 +16,6 @@ class CurrentLevel(Level):
         startY: int,
         introText: str,
         complete: bool,
-        wave: wave_room_module.WaveRoom,
     ) -> None:
         super().__init__(
             name=name,
@@ -27,7 +25,6 @@ class CurrentLevel(Level):
             introText=introText,
             complete=complete,
         )
-        self.wave: wave_room_module.WaveRoom = wave
 
     def handleMove(self, person: person_module.Person, direction: str) -> str:
         """TODO: Implement handleMove."""

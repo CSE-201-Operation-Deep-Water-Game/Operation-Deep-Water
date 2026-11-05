@@ -5,12 +5,6 @@ from game.commands.command_parser import CommandParser
 from game.core.checkpoint_manager import CheckpointManager
 from game.core.game_controller import GameController
 from game.core.person import Person
-from game.events.artifact_event import ArtifactEvent
-from game.events.base_event import BaseEvent
-from game.events.exit_event import ExitEvent
-from game.events.hazard_event import HazardEvent
-from game.events.landmark_event import LandmarkEvent
-from game.events.wave_room import WaveRoom
 from game.levels.current_level import CurrentLevel
 from game.levels.final_level import FinalLevel
 from game.levels.level import Level
@@ -22,17 +16,12 @@ from game.world.map import Map
 from game.world.tile import Tile
 
 __all__ = [
-    "ArtifactEvent",
-    "BaseEvent",
     "CheckpointManager",
     "Command",
     "CommandParser",
     "CurrentLevel",
-    "ExitEvent",
     "FinalLevel",
     "GameController",
-    "HazardEvent",
-    "LandmarkEvent",
     "Level",
     "Map",
     "Person",
@@ -40,9 +29,7 @@ __all__ = [
     "PuzzleLevel",
     "TerminalInterface",
     "Tile",
-    "TutorialLevel",
-    "WallEvent",
-    "WaveRoom",
+    "TutorialLevel"
 ]
 
 def main() -> None:
@@ -78,7 +65,6 @@ def main() -> None:
                     else "exit" if (x, y) == (0, height - 1)
                     else "open"
                 ),
-                event=None,
                 landmark="",
             )
             for x in range(width)
