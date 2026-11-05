@@ -39,7 +39,11 @@ class GameController:
     def run(self) -> None:
         while self.running:
             raw = self.ui.prompt()
-            command = self.ui.parser.parse(raw)
+            try:
+                command = self.ui.parser.parse(raw)
+            except ValueError:
+                self.ui.print("Unrecognized command. To move, enter: move up, move down, move left, or move right.")
+                continue
             self.handleCommand(command)
             if self.currentLevel.complete:
                 self.ui.print("You reached the exit.")

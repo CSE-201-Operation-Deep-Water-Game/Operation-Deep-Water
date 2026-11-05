@@ -27,5 +27,7 @@ class ExitEvent(BaseEvent):
         self.successText: str = successText
 
     def play(self, person: person_module.Person, level: level_module.Level) -> str:
-        """TODO: Implement play."""
-        raise NotImplementedError("ExitEvent.play is not implemented yet")
+        """Complete the current level and return the exit message."""
+        level.markComplete()
+        self.hasBeenTriggered = True
+        return self.successText
