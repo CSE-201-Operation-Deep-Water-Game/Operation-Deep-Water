@@ -52,7 +52,8 @@ class GameController:
 
     def handleCommand(self, cmd: command_module.Command) -> None:
         if cmd.verb == "move":
-            self.ui.print(self.currentLevel.handleMove(self.person, cmd.arg))
+            message = self.currentLevel.handleMove(self.person, cmd.arg)
+            self.ui.print(f"{message}\nEnergy: {self.person.getEnergy()}")
 
             if self.person.isDead():
                 self.handleDeath()
