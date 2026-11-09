@@ -120,5 +120,13 @@ class GameController:
             self.ui.print("Please enter yes or no.")
 
     def endGame(self, won: bool) -> None:
-        """TODO: Implement endGame."""
-        raise NotImplementedError("GameController.endGame is not implemented yet")
+        """Minimal ending: print a result and stop the game loop.
+
+        Replace the wording once the final level and real ending exist.
+        """
+        if won:
+            self.ui.print("You made it through the trench. Mission complete!")
+        else:
+            self.ui.print("The mission has failed.")
+        self.ui.print("Thanks for playing!")
+        self.running = False

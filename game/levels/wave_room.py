@@ -93,4 +93,8 @@ class WaveRoom(Level):
         if path:
             person.setPosition(path[-1][0], path[-1][1])
 
-        return f"You moved.\n{wave.getPushMessage()}"
+        message = f"You moved.\n{wave.getPushMessage()}"
+        landing = self.map.getTile(person.positionX, person.positionY)
+        if landing.getDescription():
+            message += f"\n{landing.getDescription()}"
+        return message

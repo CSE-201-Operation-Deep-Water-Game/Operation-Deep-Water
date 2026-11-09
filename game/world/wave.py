@@ -34,6 +34,7 @@ class Wave(Tile):
         direction: str,
         magnitude: int,
         landmark: str = "",
+        description: str = "",
         message: str = DEFAULT_MESSAGE,
     ) -> None:
         direction = direction.lower()
@@ -45,7 +46,13 @@ class Wave(Tile):
         if isinstance(magnitude, bool) or not isinstance(magnitude, int) or magnitude < 0:
             raise ValueError("Wave magnitude must be a non-negative integer.")
 
-        super().__init__(x=x, y=y, tileType="wave", landmark=landmark)
+        super().__init__(
+            x=x,
+            y=y,
+            tileType="wave",
+            landmark=landmark,
+            description=description,
+        )
         self.direction: str = direction
         self.magnitude: int = magnitude
         self.message: str = message
