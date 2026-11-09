@@ -34,10 +34,6 @@ class Level(ABC):
         """TODO: Implement handleMove."""
         raise NotImplementedError("Level.handleMove is not implemented yet")
 
-    def describe(self, person: person_module.Person) -> str:
-        """TODO: Implement describe."""
-        raise NotImplementedError("Level.describe is not implemented yet")
-
     def isComplete(self) -> bool:
         return self.complete
 

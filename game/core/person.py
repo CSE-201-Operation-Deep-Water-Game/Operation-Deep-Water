@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import game.world.map as map_module
+
 class Person:
     def __init__(
         self,
@@ -23,6 +28,11 @@ class Person:
 
     def decreaseEnergy(self, amount: int) -> None:
         self.energyAmt -= amount
+
+    def sonar(self, map: map_module.Map) -> str:
+        surroundings = map.sonar(self)
+        self.decreaseEnergy(5)
+        return surroundings
 
     def getEnergy(self) -> int:
         return self.energyAmt

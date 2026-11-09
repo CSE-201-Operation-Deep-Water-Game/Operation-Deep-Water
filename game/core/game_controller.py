@@ -55,15 +55,21 @@ class GameController:
             message = self.currentLevel.handleMove(self.person, cmd.arg)
             self.ui.print(f"{message}\nEnergy: {self.person.getEnergy()}")
 
-            if self.person.isDead():
-                self.handleDeath()
-
         elif cmd.verb == "status":
             self.ui.print("ENERGY: " + str(self.person.getEnergy()))
+
+        elif cmd.verb == "sonar":
+            message = self.person.sonar(self.currentLevel.map)
+            self.ui.print(f"{message}\nEnergy: {self.person.getEnergy()}")
 
         elif cmd.verb in ("end", "quit"):
             self.ui.print("Thanks for playing!")
             self.running = False
+            return
+
+        if self.person.isDead():
+            self.handleDeath()
+
 
     def loadCheckpoint(self, password: str) -> bool:
         """TODO: Implement loadCheckpoint."""
