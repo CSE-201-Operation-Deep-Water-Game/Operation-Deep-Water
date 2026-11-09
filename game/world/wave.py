@@ -54,23 +54,33 @@ class Wave(Tile):
         """Return the (dx, dy) of a single step in this wave's direction."""
         return self.DIRECTIONS[self.direction]
 
-    def getDestination(self, map: map_module.Map) -> tuple[int, int]:
-        """Return where a player standing on this tile ends up after the push.
+    def getPath(self, map: map_module.Map) -> list[tuple[int, int]]:
+        """Return every tile the push carries the player over, in order.
 
-        The player is carried one tile at a time for up to `magnitude` tiles.
-        If the next tile is a wall or off the map, the player stops on the
-        last open tile reached. A fully blocked push leaves them in place.
+        The starting (wave) tile is not included. The player is carried one
+        tile at a time for up to `magnitude` tiles and stops before a wall or
+        the map edge. A fully blocked push returns an empty list.
         """
         dx, dy = self.getPushVector()
         x, y = self.x, self.y
+        path: list[tuple[int, int]] = []
 
         for _ in range(self.magnitude):
             nextX, nextY = x + dx, y + dy
             if not map.inBounds(nextX, nextY) or not map.isPassable(nextX, nextY):
                 break
             x, y = nextX, nextY
+            path.append((x, y))
 
-        return x, y
+        return path
+
+    def getDestination(self, map: map_module.Map) -> tuple[int, int]:
+        """Return where a player standing on this tile ends up after the push.
+
+        A fully blocked push leaves them on this tile.
+        """
+        path = self.getPath(map)
+        return path[-1] if path else (self.x, self.y)
 
     def getPushMessage(self) -> str:
         """Return the vague message shown when the wave pushes the player.
