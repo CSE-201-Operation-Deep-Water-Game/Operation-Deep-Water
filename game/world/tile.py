@@ -24,3 +24,9 @@ class Tile:
     def getDescription(self) -> str:
         """TODO: Implement getDescription."""
         raise NotImplementedError("Tile.getDescription is not implemented yet")
+
+    def getLandmark(self) -> str:
+        return self.landmark
+
+    def setLandmark(self, landmark: str) -> None:
+        self.landmark = landmark
