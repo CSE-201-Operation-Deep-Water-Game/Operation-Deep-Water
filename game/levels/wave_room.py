@@ -51,11 +51,17 @@ class WaveRoom(Level):
         x, y = person.positionX + dx, person.positionY + dy
         person.decreaseEnergy(1)
 
-        if not self.map.inBounds(x, y) or not self.map.isPassable(x, y):
+        if not self.map.inBounds(x, y):
             return "You bumped into a wall."
 
-        person.setPosition(x, y)
         tile = self.map.getTile(x, y)
+        if not tile.isPassable():
+            message = "You bumped into a wall."
+            if tile.getDescription():
+                message += f" {tile.getDescription()}"
+            return message
+
+        person.setPosition(x, y)
 
         if tile.tileType == "exit":
             self.markComplete()
@@ -63,6 +69,9 @@ class WaveRoom(Level):
 
         if isinstance(tile, Wave):
             return self.applyCurrent(person, tile)
+
+        if tile.getDescription():
+            return f"You moved. {tile.getDescription()}"
 
         return "You moved."
 

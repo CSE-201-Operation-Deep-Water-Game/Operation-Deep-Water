@@ -125,7 +125,20 @@ def main() -> None:
                     else "exit" if (x, y) == (0, height - 1)
                     else "open"
                 ),
-                landmark="",
+                landmark=(
+                    "weathered wall" if (x, y) == (4, 1)
+                    else "submarine wreckage" if (x, y) == (1, 1)
+                    else ""
+                ),
+                description=(
+                    "The wall is incredibly smooth, worn down by years of "
+                    "relentless currents."
+                    if (x, y) == (4, 1)
+                    else "A pile of twisted metal scraps lies on the ground. "
+                    "They look like the remains of another submarine."
+                    if (x, y) == (1, 1)
+                    else ""
+                ),
             )
             for x in range(width)
         ]
