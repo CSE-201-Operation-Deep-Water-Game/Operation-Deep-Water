@@ -79,6 +79,3 @@ class Wave(Tile):
         where they ended up from landmarks and sonar.
         """
         return self.message
-
-    def getDescription(self) -> str:
-        return "A churning current."
