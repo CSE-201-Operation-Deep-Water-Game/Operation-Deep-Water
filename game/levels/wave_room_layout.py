@@ -3,8 +3,7 @@
 Coordinates: x grows to the right, y grows UP (so "move up" is +y). LAYOUT is
 written top row first, so its first line is y=8 and its last line is y=0.
 
-Both main.py and practice_wave_room.py call buildWaveRoom(), so this is the
-only place the room is defined.
+main.py calls buildWaveRoom(), so this is the only place the room is defined.
 """
 
 from __future__ import annotations
