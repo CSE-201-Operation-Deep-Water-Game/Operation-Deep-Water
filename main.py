@@ -5,11 +5,11 @@ from game.commands.command_parser import CommandParser
 from game.core.checkpoint_manager import CheckpointManager
 from game.core.game_controller import GameController
 from game.core.person import Person
-from game.levels.current_level import CurrentLevel
 from game.levels.final_level import FinalLevel
 from game.levels.level import Level
 from game.levels.puzzle_level import PuzzleLevel
 from game.levels.tutorial_level import TutorialLevel
+from game.levels.wave_room import WaveRoom
 from game.puzzles.puzzle import Puzzle
 from game.ui.terminal_interface import TerminalInterface
 from game.world.map import Map
@@ -19,7 +19,6 @@ __all__ = [
     "CheckpointManager",
     "Command",
     "CommandParser",
-    "CurrentLevel",
     "FinalLevel",
     "GameController",
     "Level",
@@ -29,7 +28,8 @@ __all__ = [
     "PuzzleLevel",
     "TerminalInterface",
     "Tile",
-    "TutorialLevel"
+    "TutorialLevel",
+    "WaveRoom",
 ]
 
 def main() -> None:
@@ -109,7 +109,7 @@ def main() -> None:
         ]
         for y in range(height)
     ]
-    waveRoom = CurrentLevel(
+    waveRoom = WaveRoom(
         name="Wave Room",
         map=Map(grid=waveRoomGrid, width=width, height=height),
         startX=startX,
