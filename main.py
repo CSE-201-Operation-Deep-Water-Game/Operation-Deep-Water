@@ -82,9 +82,43 @@ def main() -> None:
         complete=False,
         hints=["Use move up, down, left, or right to explore."],
     )
+
+    waveRoomWalls = {
+        (2, 0), (2, 1),
+        (4, 1), (6, 2),
+        (1, 3), (3, 3), (5, 3),
+    }
+    waveRoomGrid = [
+        [
+            Tile(
+                x=x,
+                y=y,
+                tileType=(
+                    "wall" if (x, y) in waveRoomWalls
+                    else "exit" if (x, y) == (0, height - 1)
+                    else "open"
+                ),
+                landmark="strong current" if (x, y) == (4, 2) else "",
+            )
+            for x in range(width)
+        ]
+        for y in range(height)
+    ]
+    waveRoom = CurrentLevel(
+        name="Wave Room",
+        map=Map(grid=waveRoomGrid, width=width, height=height),
+        startX=startX,
+        startY=startY,
+        introText=(
+            "You enter a new room, where a strong current surges through the "
+            "passages. You can feel your submarine being pushed around. Map the room and find the exit."
+        ),
+        complete=False,
+    )
+
     game_controller = GameController(
         person=player,
-        levels=[tutorial],
+        levels=[tutorial, waveRoom],
         currentLevel=tutorial,
         ui=ui,
         checkpoints=checkpoints,
