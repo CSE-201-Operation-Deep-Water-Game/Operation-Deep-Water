@@ -77,7 +77,8 @@ def main() -> None:
         map=Map(grid=grid, width=width, height=height),
         startX=startX,
         startY=startY,
-        introText="Welcome to Operation Deep Water. Find your way to the exit.",
+        introText="You enter a dark, narrow passage. You must find your way " \
+        "through the maze of walls to reach the exit.",
         complete=False,
         hints=["Use move up, down, left, or right to explore."],
     )

@@ -19,10 +19,18 @@ class TerminalInterface:
 
     def showBriefing(self) -> None:
         self.print(
-            "=== Operation Deep Water ===\n"
-            "Your mission: explore the underwater facility and recover the artifact.\n"
-            "Find each level's exit to continue. Watch for walls and hazards.\n"
-            "Each successful move costs energy. If your energy reaches zero, you die.\n"
+            "=== OPERATION DEEP WATER ===\n"
+            "The hatch seals behind you. Welded inside a Soviet submarine, you begin\n"
+            "your descent into the crushing dark of the Mariana Trench.\n"
+            "\n"
+            "An unknown signal pulses from somewhere below. Its source is the NAYRB,\n"
+            "an artifact hidden in a maze of caves and an ancient temple carved into\n"
+            "the trench wall. Follow the signal, chart the passages, and find a way\n"
+            "deeper. Keep a map as you explore; the route ahead will not reveal itself\n"
+            "all at once.\n"
+            "\n"
+            "Your submarine is your only lifeline. Watch for walls and hazards:\n"
+            "every move costs energy, and if it runs out, the mission ends.\n"
             "\n"
             "To move, enter: move up, move down, move left, or move right.\n"
         )
