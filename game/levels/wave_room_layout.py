@@ -46,8 +46,19 @@ WAVES: dict[tuple[int, int], tuple[str, int]] = {
 # message point at; the description is the longer text shown when you land
 # there. Landmarks on open tiles show as "L" on sonar. Landmarks on wave tiles
 # still print their text when a current drops you there, but sonar draws them
-# as "~". Some landing spots are left blank on purpose.
+# as "~". Landmarks on walls show their description when you bump into them.
+# Some landing spots are left blank on purpose.
 LANDMARKS: dict[tuple[int, int], tuple[str, str]] = {
+    (1, 1): (
+        "submarine wreckage",
+        "A pile of twisted metal scraps lies on the ground. They look like the "
+        "remains of another submarine.",
+    ),
+    (3, 1): (
+        "weathered wall",
+        "The wall is incredibly smooth, worn down by years of relentless "
+        "currents.",
+    ),
     (0, 3): (
         "faded poster",
         "A water-stained propaganda poster clings to the wall. It promises a "
@@ -111,11 +122,19 @@ def buildWaveRoom() -> WaveRoom:
         tiles: list[Tile] = []
         for x, ch in enumerate(text):
             landmark, description = LANDMARKS.get((x, y), ("", ""))
-            if landmark and ch in ("#", "E"):
-                raise ValueError(f"Landmark at ({x}, {y}) is on a wall or exit.")
+            if landmark and ch == "E":
+                raise ValueError(f"Landmark at ({x}, {y}) is on the exit.")
 
             if ch == "#":
-                tiles.append(Tile(x=x, y=y, tileType="wall", landmark=""))
+                tiles.append(
+                    Tile(
+                        x=x,
+                        y=y,
+                        tileType="wall",
+                        landmark=landmark,
+                        description=description,
+                    )
+                )
             elif ch == "E":
                 tiles.append(Tile(x=x, y=y, tileType="exit", landmark=""))
             elif ch == "~":
