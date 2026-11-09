@@ -47,7 +47,6 @@ class GameController:
             self.handleCommand(command)
             if self.currentLevel.complete:
                 self.ui.print("You reached the exit.")
-                self.running = False
                 self.advanceLevel()
 
     def handleCommand(self, cmd: command_module.Command) -> None:
