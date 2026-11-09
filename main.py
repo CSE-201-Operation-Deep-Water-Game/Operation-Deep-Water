@@ -41,6 +41,7 @@ def main() -> None:
             "look": "look",
             "help": "help",
             "status": "status",
+            "sonar": "sonar",
             "quit": "quit",
             "end": "end",
         }

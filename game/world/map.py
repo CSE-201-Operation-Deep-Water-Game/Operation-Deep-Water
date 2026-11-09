@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import game.world.tile as tile_module
+import game.core.person as person_module
 
 
 class Map:
@@ -32,3 +33,28 @@ class Map:
 
     def isPassable(self, x: int, y: int) -> bool:
         return self.getTile(x, y).isPassable()
+
+    def sonar(self, person: person_module.Person) -> str:
+        playerX, playerY = person.getPosition()
+        rows = []
+        symbols = {"wall": "#", "open": ".", "exit": "E", "wave": "~"}
+
+        for y in range(playerY + 1, playerY - 2, -1):
+            row = []
+            for x in range(playerX - 1, playerX + 2):
+                if (x, y) == (playerX, playerY):
+                    symbol = "P"
+                elif not self.inBounds(x, y):
+                    symbol = "#"
+                else:
+                    tile = self.getTile(x, y)
+                    symbol = symbols.get(tile.tileType, "?")
+                    if tile.landmark and tile.tileType == "open":
+                        symbol = "L"
+                row.append(symbol)
+            rows.append(" ".join(row))
+
+        return "\n".join(rows) + (
+            "\nP: player | #: wall | .: open | E: exit | L: landmark"
+            " | ~: wave | ?: unknown"
+        )

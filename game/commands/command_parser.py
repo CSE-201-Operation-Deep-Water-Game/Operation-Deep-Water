@@ -23,6 +23,9 @@ class CommandParser:
         if first in self.DIRECTIONS:
             return command_module.Command(verb="move", arg=first)
 
+        if first == "sonar":
+            return command_module.Command(verb="sonar", arg=first)
+
         verb = self.validVerbs[first]
         arg = parts[1] if len(parts) > 1 else ""
 
