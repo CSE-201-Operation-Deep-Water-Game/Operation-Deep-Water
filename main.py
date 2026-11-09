@@ -88,6 +88,9 @@ def main() -> None:
         (4, 1), (6, 2),
         (1, 3), (3, 3), (5, 3),
     }
+    waveRoomWaves = {
+        (4, 2), (5, 2), (6, 3),
+    }
     waveRoomGrid = [
         [
             Tile(
@@ -96,9 +99,10 @@ def main() -> None:
                 tileType=(
                     "wall" if (x, y) in waveRoomWalls
                     else "exit" if (x, y) == (0, height - 1)
+                    else "wave" if (x, y) in waveRoomWaves
                     else "open"
                 ),
-                landmark="strong current" if (x, y) == (4, 2) else "",
+                landmark="",
             )
             for x in range(width)
         ]
