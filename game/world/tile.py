@@ -8,11 +8,13 @@ class Tile:
         y: int,
         tileType: str,
         landmark: str,
+        description: str = "",
     ) -> None:
         self.x: int = x
         self.y: int = y
         self.tileType: str = tileType
         self.landmark: str = landmark
+        self.description: str = description
 
     def isPassable(self) -> bool:
         return self.tileType != "wall"
@@ -26,3 +28,9 @@ class Tile:
 
     def setLandmark(self, landmark: str) -> None:
         self.landmark = landmark
+
+    def getDescription(self) -> str:
+        return self.description
+
+    def setDescription(self, description: str) -> None:
+        self.description = description

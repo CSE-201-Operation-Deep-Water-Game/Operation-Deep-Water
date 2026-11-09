@@ -66,7 +66,21 @@ def main() -> None:
                     else "exit" if (x, y) == (0, height - 1)
                     else "open"
                 ),
-                landmark="",
+                landmark=(
+                    "jagged rock" if (x, y) == (4, 0)
+                    else "suspicious carving" if (x, y) == (3, 1)
+                    else ""
+                ),
+                description=(
+                    "A jagged rock juts from the trench floor, its sharp edges "
+                    "catching the beam of your lights."
+                    if (x, y) == (4, 0)
+                    else "A series of strange symbols has been carved into the "
+                    "wall. The marks look deliberate, but you cannot make sense "
+                    "of them."
+                    if (x, y) == (3, 1)
+                    else ""
+                ),
             )
             for x in range(width)
         ]

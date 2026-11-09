@@ -40,17 +40,27 @@ class TutorialLevel(Level):
 
         dx, dy = directions[direction]
         x, y = person.positionX + dx, person.positionY + dy
-        if not self.map.inBounds(x, y) or not self.map.isPassable(x, y):
+        if not self.map.inBounds(x, y):
             person.decreaseEnergy(1)
             return "You bumped into a wall."
+
+        destination = self.map.getTile(x, y)
+        if not destination.isPassable():
+            person.decreaseEnergy(1)
+            message = "You bumped into a wall."
+            if destination.getDescription():
+                message += f" {destination.getDescription()}"
+            return message
 
         person.setPosition(x, y)
         person.decreaseEnergy(1)
 
-        if self.map.getTile(x, y).tileType == "exit":
+        if destination.tileType == "exit":
             self.markComplete()
             return "You reached the exit."
 
+        if destination.getDescription():
+            return f"You moved. {destination.getDescription()}"
 
         return "You moved."
 
