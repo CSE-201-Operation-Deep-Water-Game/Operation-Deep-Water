@@ -51,7 +51,16 @@ class GameController:
 
     def handleCommand(self, cmd: command_module.Command) -> None:
         if cmd.verb == "move":
+            oldPosition = self.person.getPosition()
             message = self.currentLevel.handleMove(self.person, cmd.arg)
+
+            x, y = self.person.getPosition()
+            if (x, y) != oldPosition:
+                tile = self.currentLevel.map.getTile(x, y)
+                landmark = tile.getLandmark()
+                if landmark:
+                    message += f"\n{landmark}"
+
             self.ui.print(f"{message}\nEnergy: {self.person.getEnergy()}")
 
         elif cmd.verb == "status":

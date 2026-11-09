@@ -14,6 +14,7 @@ from game.puzzles.puzzle import Puzzle
 from game.ui.terminal_interface import TerminalInterface
 from game.world.map import Map
 from game.world.tile import Tile
+from game.world.wave import Wave
 
 __all__ = [
     "CheckpointManager",
@@ -104,17 +105,24 @@ def main() -> None:
         (1, 3), (3, 3), (5, 3),
     }
     waveRoomWaves = {
-        (4, 2), (5, 2), (6, 3),
+        (4, 2): ("left", 2),
+        (5, 2): ("left", 2),
+        (6, 3): ("up", 1),
     }
     waveRoomGrid = [
         [
-            Tile(
+            Wave(
+                x=x,
+                y=y,
+                direction=waveRoomWaves[(x, y)][0],
+                magnitude=waveRoomWaves[(x, y)][1],
+            )
+            if (x, y) in waveRoomWaves else Tile(
                 x=x,
                 y=y,
                 tileType=(
                     "wall" if (x, y) in waveRoomWalls
                     else "exit" if (x, y) == (0, height - 1)
-                    else "wave" if (x, y) in waveRoomWaves
                     else "open"
                 ),
                 landmark="",

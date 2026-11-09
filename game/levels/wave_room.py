@@ -82,6 +82,6 @@ class WaveRoom(Level):
                 return f"{wave.getPushMessage()}\nThe current sweeps you to the exit."
 
         if path:
-            person.setPosition(*path[-1])
+            person.setPosition(path[-1][0], path[-1][1])
 
         return f"You moved.\n{wave.getPushMessage()}"
