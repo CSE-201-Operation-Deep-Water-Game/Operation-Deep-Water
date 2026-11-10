@@ -68,17 +68,19 @@ def main() -> None:
                     else "open"
                 ),
                 landmark=(
-                    "jagged rock" if (x, y) == (4, 0)
-                    else "suspicious carving" if (x, y) == (3, 1)
+                    "inscribed stone fragment" if (x, y) == (4, 0)
+                    else "concealed alien script" if (x, y) == (3, 1)
                     else ""
                 ),
                 description=(
-                    "A jagged rock juts from the trench floor, its sharp edges "
-                    "catching the beam of your lights."
+                    "A stone fragment bears precise symbols beneath centuries "
+                    "of mineral growth. One matches the NAYRB sketch in your "
+                    "sealed government orders."
                     if (x, y) == (4, 0)
-                    else "A series of strange symbols has been carved into the "
-                    "wall. The marks look deliberate, but you cannot make sense "
-                    "of them."
+                    else "Flaking survey paint exposes lines of alien script. "
+                    "A military stencil labels the wall NATURAL FORMATION. "
+                    "You cannot read the symbols; the NAYRB artifact is "
+                    "rumored to be the key."
                     if (x, y) == (3, 1)
                     else ""
                 ),
