@@ -51,5 +51,5 @@ class PuzzleLevel(Level):
         return person.positionX == self.intersectionX and person.positionY == self.intersectionY
 
     def unlockEntrance(self) -> str:
-        self.map.setTile(0, 0, Tile(x=0, y=0, tileType="open"))
+        self.map.setTile(0, 0, Tile(x=0, y=0, tileType="open", landmark=""))
         return "After the sonar pulse is sent out, you hear a low rumbling sound outside, it seems something has shifted in the maze"
