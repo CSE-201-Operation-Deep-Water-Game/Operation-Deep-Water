@@ -11,7 +11,6 @@ from game.levels.puzzle_level import PuzzleLevel
 from game.levels.tutorial_level import TutorialLevel
 from game.levels.wave_room import WaveRoom
 from game.levels.wave_room_layout import buildWaveRoom
-from game.puzzles.puzzle import Puzzle
 from game.ui.terminal_interface import TerminalInterface
 from game.world.map import Map
 from game.world.tile import Tile
@@ -25,7 +24,6 @@ __all__ = [
     "Level",
     "Map",
     "Person",
-    "Puzzle",
     "PuzzleLevel",
     "TerminalInterface",
     "Tile",
