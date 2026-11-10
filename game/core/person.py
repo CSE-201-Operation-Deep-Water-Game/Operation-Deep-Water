@@ -29,8 +29,8 @@ class Person:
     def decreaseEnergy(self, amount: int) -> None:
         self.energyAmt -= amount
 
-    def sonar(self, map: map_module.Map) -> str:
-        surroundings = map.sonar(self)
+    def sonar(self, map: map_module.Map, arg: str) -> str:
+        surroundings = map.sonar(self, arg)
         self.decreaseEnergy(5)
         return surroundings
 
