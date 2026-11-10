@@ -56,7 +56,7 @@ class Map:
             row = []
             for x in range(startX - 1, startX + 2):
                 if (x, y) == (playerX, playerY):
-                    symbol = "P"
+                    symbol = "S"
                 elif not self.inBounds(x, y):
                     symbol = "#"
                 else:
@@ -68,6 +68,6 @@ class Map:
             rows.append(" ".join(row))
 
         return "\n".join(rows) + (
-            "\nP: player | #: wall | .: open | E: exit | L: landmark"
+            "\nS: submarine | #: wall | .: open | E: exit | L: landmark"
             " | ~: wave | ?: unknown"
         )
