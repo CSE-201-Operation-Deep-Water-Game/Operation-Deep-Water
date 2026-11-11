@@ -29,6 +29,13 @@ class TutorialLevel(Level):
         self.hints: list[str] = hints
 
     def handleMove(self, person: person_module.Person, direction: str) -> str:
+        """Handles player movement
+        Args:
+            person (person_module.Person): person to move
+            direction (str): direction to move
+
+        :return str: message returned from player movement.
+            """
         directions = {
             "up": (0, 1),
             "down": (0, -1),

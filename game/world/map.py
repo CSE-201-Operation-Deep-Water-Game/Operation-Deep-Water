@@ -29,12 +29,36 @@ class Map:
         self.grid[y][x] = tile
 
     def inBounds(self, x: int, y: int) -> bool:
+        """Check if tile position (x, y) is within the map.
+
+        Args:
+            x (int): x position
+            y (int): y position
+
+        :return: True if tile position (x, y) is within the map, False otherwise
+
+        """
         return 0 <= x < self.width and 0 <= y < self.height
 
     def isPassable(self, x: int, y: int) -> bool:
+        """check if tile position (x, y) is passable.
+        Args:
+            x (int): x position
+            y (int): y position
+
+        :return True if tile position (x, y) is passable, False otherwise
+        """
         return self.getTile(x, y).isPassable()
 
     def sonar(self, person: person_module.Person, dir: str) -> str:
+        """Creates a string represenation of the players surroundings
+
+        args:
+            person (person_module.Person): person for checking position
+            dir (str): direction of the sonar
+
+        :return string a representation of the players surroundings.
+        """
         playerX, playerY = person.getPosition()
 
         startX, startY = playerX, playerY

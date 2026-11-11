@@ -17,6 +17,7 @@ class Tile:
         self.description: str = description
 
     def isPassable(self) -> bool:
+        """Checks if this tile can be passed"""
         return self.tileType != "wall"
 
     def setType(self, tileType: str) -> None:

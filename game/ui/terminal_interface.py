@@ -12,12 +12,15 @@ class TerminalInterface:
         self.parser: command_parser_module.CommandParser = parser
 
     def print(self, text: str) -> None:
+        """prints the given text to the terminal."""
         print(text)
 
     def prompt(self) -> str:
+        """prompts the user to enter some text."""
         return input("> ")
 
     def showBriefing(self) -> None:
+        """shows the game's opening brief"""
         self.print(
             "=== OPERATION DEEP WATER ===\n"
             "The hatch seals behind you. Welded inside a Soviet submarine, you begin\n"

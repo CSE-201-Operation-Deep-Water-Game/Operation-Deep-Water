@@ -14,6 +14,7 @@ class CommandParser:
     DIRECTIONS = {"up", "down", "left", "right"}
 
     def parse(self, raw: str) -> command_module.Command:
+        """normalizes and parses commands entered by user"""
         if not self.isValid(raw):
             raise ValueError("Enter a recognized command.")
 
@@ -33,6 +34,7 @@ class CommandParser:
         return command_module.Command(verb=verb, arg=arg)
 
     def isValid(self, raw: str) -> bool:
+        """checks if the command entered by user is valid"""
         parts = raw.split(maxsplit=1)
         if not parts:
             return False
