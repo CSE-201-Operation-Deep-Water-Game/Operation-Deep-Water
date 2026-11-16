@@ -8,10 +8,25 @@ from game.world.tile import Tile
 from game.world.wave import Wave
 
 
-@pytest.fixture(params=[TutorialLevel,WaveRoom])
+@pytest.fixture(params=[TutorialLevel, WaveRoom, PuzzleLevel])
 def level(request,level_kwargs):
     extra = {'hints':[]} if request.param is TutorialLevel else {}
+    if request.param is PuzzleLevel:
+        extra = {'intersectionX': 2, 'intersectionY': 2}
     return request.param(**level_kwargs,**extra)
+
+
+@pytest.mark.parametrize('direction,blocked', [('right', False), ('right', True), ('diagonal', False)])
+def test_validate_move_does_not_change_player(level, person, world, direction, blocked):
+    if blocked:
+        world.setTile(3, 2, Tile(x=3, y=2, tileType='wall', landmark='',
+                                description='Carved wall.'))
+    message = level.validateMove(person, direction)
+    assert bool(message) == (blocked or direction == 'diagonal')
+    if blocked:
+        assert 'Carved wall.' in message
+    assert person.getPosition() == (2, 2)
+    assert person.getEnergy() == 20
 
 
 def test_level_start_and_completion(level,person):

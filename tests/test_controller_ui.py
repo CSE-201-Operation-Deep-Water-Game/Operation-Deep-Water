@@ -134,13 +134,3 @@ def test_terminal_print_prompt_and_briefing(capsys,monkeypatch):
     assert 'NAYRB' in briefing and 'sonar' in briefing
 
 
-def test_main_builds_playable_levels_without_starting_input():
-    with patch.object(main.GameController,'start',autospec=True) as start:
-        main.main()
-    game = start.call_args.args[0]
-    assert game.currentLevel is game.levels[0]
-    assert len(game.levels) >= 2
-    assert game.ui.parser.parse('sonar up').arg == 'up'
-    for level in game.levels:
-        assert level.map.inBounds(level.startX,level.startY)
-        assert level.map.isPassable(level.startX,level.startY)

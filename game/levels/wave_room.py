@@ -17,13 +17,6 @@ class WaveRoom(Level):
     ends on an exit tile the level is complete.
     """
 
-    DIRECTIONS: dict[str, tuple[int, int]] = {
-        "up": (0, 1),
-        "down": (0, -1),
-        "left": (-1, 0),
-        "right": (1, 0),
-    }
-
     def __init__(
         self,
         *,
@@ -44,24 +37,16 @@ class WaveRoom(Level):
         )
 
     def handleMove(self, person: person_module.Person, direction: str) -> str:
-        if direction not in self.DIRECTIONS:
-            return "Invalid direction."
+        invalidMoveResponse = self.validateMove(person, direction)
+        if direction in self.DIRECTIONS:
+            person.decreaseEnergy(1)
+        if invalidMoveResponse:
+            return invalidMoveResponse
 
         dx, dy = self.DIRECTIONS[direction]
         x, y = person.positionX + dx, person.positionY + dy
-        person.decreaseEnergy(1)
-
-        if not self.map.inBounds(x, y):
-            return "You bumped into a wall."
-
-        tile = self.map.getTile(x, y)
-        if not tile.isPassable():
-            message = "You bumped into a wall."
-            if tile.getDescription():
-                message += f" {tile.getDescription()}"
-            return message
-
         person.setPosition(x, y)
+        tile = self.map.getTile(x, y)
 
         if tile.tileType == "exit":
             self.markComplete()

@@ -49,24 +49,17 @@ class PuzzleLevel(Level):
         return super().start(person)
 
     def handleMove(self, person: person_module.Person, direction: str) -> str:
-        directions = {"up": (0, 1), "down": (0, -1),
-                      "left": (-1, 0), "right": (1, 0)}
-        
-        if direction not in directions:
-            return "Invalid direction."
-        
-        dx, dy = directions[direction]
+        invalidMoveResponse = self.validateMove(person, direction)
+        if direction in self.DIRECTIONS:
+            person.decreaseEnergy(1)
+        if invalidMoveResponse:
+            return invalidMoveResponse
+
+        dx, dy = self.DIRECTIONS[direction]
         x, y = person.positionX + dx, person.positionY + dy
-        person.decreaseEnergy(1)
-        
-        if not self.map.inBounds(x, y):
-            return "You bumped into a wall."
-        
-        tile = self.map.getTile(x, y)
-        if not tile.isPassable():
-            return "You bumped into a wall. " + tile.getDescription()
-        
         person.setPosition(x, y)
+        tile = self.map.getTile(x, y)
+
         if tile.tileType == "exit":
             self.markComplete()
             return "You reached the exit."
