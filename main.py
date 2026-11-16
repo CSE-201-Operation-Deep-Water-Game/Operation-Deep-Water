@@ -8,6 +8,7 @@ from game.core.person import Person
 from game.levels.final_level import FinalLevel
 from game.levels.level import Level
 from game.levels.puzzle_level import PuzzleLevel
+from game.levels.puzzle_room_layout import buildPuzzleRoom
 from game.levels.tutorial_level import TutorialLevel
 from game.levels.wave_room import WaveRoom
 from game.levels.wave_room_layout import buildWaveRoom
@@ -100,11 +101,12 @@ def main() -> None:
     )
 
     waveRoom = buildWaveRoom()
+    puzzleRoom = buildPuzzleRoom()
 
     game_controller = GameController(
         person=player,
-        levels=[tutorial, waveRoom],
-        currentLevel=tutorial,
+        levels=[tutorial, waveRoom, puzzleRoom],
+        currentLevel=puzzleRoom,
         ui=ui,
         checkpoints=checkpoints,
         running=False,

@@ -75,6 +75,9 @@ class GameController:
 
         elif cmd.verb == "sonar":
             message = self.person.sonar(self.currentLevel.map, cmd.arg)
+            response = self.currentLevel.onSonar(self.person)
+            if response:
+                message += f"\n{response}"
             self.ui.print(f"{message}\nEnergy: {self.person.getEnergy()}")
 
         elif cmd.verb in ("end", "quit"):

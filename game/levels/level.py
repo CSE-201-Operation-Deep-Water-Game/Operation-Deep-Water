@@ -37,5 +37,9 @@ class Level(ABC):
     def isComplete(self) -> bool:
         return self.complete
 
+    def onSonar(self, person: person_module.Person) -> str:
+        """React to a sonar pulse from the player's current position."""
+        return ""
+
     def markComplete(self) -> None:
         self.complete = True
