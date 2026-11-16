@@ -2,7 +2,6 @@
 
 The four landmarks at (2, 2), (8, 2), (2, 6), (8, 6) define two
 diagonals crossing at (5, 4). E is a sealed wall until sonar unlocks it.
-The crossing deliberately has no special map symbol.
 """
 
 from game.levels.puzzle_level import PuzzleLevel
@@ -38,14 +37,12 @@ LANDMARKS: dict[tuple[int, int], tuple[str, str]] = {
     (2, 6): (
         "broken listening shrine",
         "A government hydrophone has been bolted to an ancient shrine. A scratched "
-        "note reads: 'Go to the tile where both diagonals cross. The listener "
-        "waits beneath that spot.' Something below answers with a faint knock.",
+        "note reads: 'Go to the tile where both diagonals cross.",
     ),
     (8, 6): (
         "silent choir pillar",
         "Four carved mouths surround a closed stone iris. A recovered field "
-        "note reads: 'Send a sonar pulse while sitting at the X's intersection "
-        "to open the northern exit. Pinging from a marker does nothing.' "
+        "note reads: 'Send a sonar pulse while sitting at the X's intersection' "
         "Below it: 'Command knew this was a lock. What did they leave inside?'",
     ),
 }
@@ -74,7 +71,7 @@ def buildPuzzleRoom() -> PuzzleLevel:
                 landmark=landmark, description=description,
             ))
         grid.append(tiles)
-    # Row 0 of the grid must be y=0, so flip the top-first layout.
+
     grid.reverse()
     return PuzzleLevel(
         name="Puzzle Room", map=Map(grid=grid, width=width, height=height),
