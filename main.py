@@ -8,10 +8,10 @@ from game.core.person import Person
 from game.levels.final_level import FinalLevel
 from game.levels.level import Level
 from game.levels.puzzle_level import PuzzleLevel
+from game.levels.puzzle_room_layout import buildPuzzleRoom
 from game.levels.tutorial_level import TutorialLevel
 from game.levels.wave_room import WaveRoom
 from game.levels.wave_room_layout import buildWaveRoom
-from game.puzzles.puzzle import Puzzle
 from game.ui.terminal_interface import TerminalInterface
 from game.world.map import Map
 from game.world.tile import Tile
@@ -25,7 +25,6 @@ __all__ = [
     "Level",
     "Map",
     "Person",
-    "Puzzle",
     "PuzzleLevel",
     "TerminalInterface",
     "Tile",
@@ -68,17 +67,19 @@ def main() -> None:
                     else "open"
                 ),
                 landmark=(
-                    "jagged rock" if (x, y) == (4, 0)
-                    else "suspicious carving" if (x, y) == (3, 1)
+                    "inscribed stone fragment" if (x, y) == (4, 0)
+                    else "concealed alien script" if (x, y) == (3, 1)
                     else ""
                 ),
                 description=(
-                    "A jagged rock juts from the trench floor, its sharp edges "
-                    "catching the beam of your lights."
+                    "A stone fragment bears precise symbols beneath centuries "
+                    "of mineral growth. One matches the NAYRB sketch in your "
+                    "sealed government orders."
                     if (x, y) == (4, 0)
-                    else "A series of strange symbols has been carved into the "
-                    "wall. The marks look deliberate, but you cannot make sense "
-                    "of them."
+                    else "Flaking survey paint exposes lines of alien script. "
+                    "A military stencil labels the wall NATURAL FORMATION. "
+                    "You cannot read the symbols; the NAYRB artifact is "
+                    "rumored to be the key."
                     if (x, y) == (3, 1)
                     else ""
                 ),
@@ -100,11 +101,12 @@ def main() -> None:
     )
 
     waveRoom = buildWaveRoom()
+    puzzleRoom = buildPuzzleRoom()
 
     game_controller = GameController(
         person=player,
-        levels=[tutorial, waveRoom],
-        currentLevel=tutorial,
+        levels=[tutorial, waveRoom, puzzleRoom],
+        currentLevel=puzzleRoom,
         ui=ui,
         checkpoints=checkpoints,
         running=False,

@@ -49,54 +49,68 @@ WAVES: dict[tuple[int, int], tuple[str, int]] = {
 # Some landing spots are left blank on purpose.
 LANDMARKS: dict[tuple[int, int], tuple[str, str]] = {
     (1, 1): (
-        "submarine wreckage",
-        "A pile of twisted metal scraps lies on the ground. They look like the "
-        "remains of another submarine.",
+        "unmarked survey wreck",
+        "A survey submarine lies crushed against the stone, its identifying "
+        "numbers ground away. Inside its open chart case is a government seal "
+        "matching your orders. You were told this passage had never been explored.",
     ),
     (3, 1): (
-        "weathered wall",
-        "The wall is incredibly smooth, worn down by years of relentless "
-        "currents.",
+        "buried inscription",
+        "Beneath a broken layer of concrete, rows of unfamiliar symbols cover "
+        "the wall. The concrete bears a recent military survey stamp. Someone "
+        "found this writing before you, then paid to bury it.",
     ),
     (0, 3): (
-        "faded poster",
-        "A water-stained propaganda poster clings to the wall. It promises a "
-        "glorious future and, in smaller print, a mandatory safety briefing.",
+        "sealed research canister",
+        "A split canister holds photographs of towers beneath the seabed. "
+        "A classified note reads: 'Settlement predates all known human sites. "
+        "Public designation remains geological formation.'",
     ),
     (2, 5): (
-        "rope ladder",
-        "A rope ladder sways in the current, leading nowhere. Someone tied it "
-        "with great confidence and no visible plan.",
+        "carved stone figures",
+        "A frieze shows slender, jointed figures gathered around a ring of "
+        "symbols. None has a human face. Their hands reach toward an empty "
+        "recess shaped like the artifact in your mission dossier.",
     ),
     (5, 6): (
-        "cable tangle",
-        "A thick tangle of cable drifts like a regulation-gray jellyfish. A "
-        "tag on it says DO NOT TOUCH, which is exactly what you were thinking.",
+        "severed listening cable",
+        "A government listening cable is wrapped around an inscribed pillar. "
+        "Its armored sheath has been pulled apart, leaving fresh copper "
+        "exposed. Your receiver catches three slow knocks. Then three more, "
+        "from somewhere beyond the pillar.",
     ),
     (7, 0): (
-        "ration crate",
-        "A sealed ration crate rests on the floor, stamped 'Property of the "
-        "State'. It is empty. The State got here first.",
+        "NAYRB research case",
+        "A waterproof case contains failed translations of the same alien "
+        "inscription. One line is underlined: 'NAYRB may supply the missing "
+        "reference needed to read their language.' Every proposed translation "
+        "has been crossed out.",
     ),
     (9, 4): (
-        "diving bell",
-        "A toppled diving bell lies on its side, hatch rusted open. The manual "
-        "inside is forty pages of warnings and one page of instructions.",
+        "abandoned diving bell",
+        "An empty diving bell rests beside a survey marker. Its tether is "
+        "still secure, but the hatch has buckled inward. The last log entry "
+        "reads: 'Movement below the excavation. No matching sonar contact. "
+        "Requesting instructions.' There is no reply.",
     ),
     (10, 3): (
-        "stern buoy",
-        "A battered buoy is wedged against the rock, its peeling paint forming "
-        "a very stern face. It does not approve of you.",
+        "damaged survey recorder",
+        "A recorder repeats a clipped voice: 'Command, the marks are not "
+        "erosion. Something is moving through the lower galleries.' A second "
+        "voice asks for a visual identification. Only scraping follows.",
     ),
     (11, 7): (
-        "cracked porthole",
-        "A cracked porthole is set into the wall. Beyond it, only dark water "
-        "and the faint sense of being filed under 'pending review'.",
+        "alien observation window",
+        "A seamless pane looks into a chamber lined with the same unreadable "
+        "script. Sediment lifts from the floor in a long, narrow trail. Your "
+        "lights reach the far wall, but you cannot see what disturbed it.",
     ),
     (10, 8): (
-        "red glow",
-        "A faint red glow bleeds around the corner. Either the exit, or "
-        "something that wants you to think so.",
+        "resonant doorway",
+        "Symbols around a stone doorway pulse in time with the NAYRB signal. "
+        "Your orders say to recover the artifact and leave all inscriptions "
+        "untouched. Beyond the doorway, something scrapes once against stone. "
+        "The mission dossier lists no living organisms at this depth.",
     ),
 }
 

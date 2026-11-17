@@ -12,12 +12,15 @@ class TerminalInterface:
         self.parser: command_parser_module.CommandParser = parser
 
     def print(self, text: str) -> None:
+        """prints the given text to the terminal."""
         print(text)
 
     def prompt(self) -> str:
+        """prompts the user to enter some text."""
         return input("> ")
 
     def showBriefing(self) -> None:
+        """shows the game's opening brief"""
         self.print(
             "=== OPERATION DEEP WATER ===\n"
             "The hatch seals behind you. Welded inside a Soviet submarine, you begin\n"
@@ -32,7 +35,8 @@ class TerminalInterface:
             "Your submarine is your only lifeline. Watch for walls and hazards:\n"
             "every move costs energy, and if it runs out, the mission ends.\n"
             "\n"
-            "Avoid getting lost by using your sonar to locate the exit. Be warned, the sonar\n"
+            "Avoid getting lost by using your sonar to locate the exit. Use command sonar up, down, left,\n"
+            "or right to scan the surrounding area. Be warned, the sonar\n"
             "requires a lot of energy to use, so use it sparingly.\n"
             "\n"
             "To move, enter: move up, move down, move left, or move right.\n"

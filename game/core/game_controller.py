@@ -26,6 +26,7 @@ class GameController:
         self.running: bool = running
 
     def start(self) -> None:
+        """Start the game loop."""
         self.ui.showBriefing()
         self.person.resetEnergy()
 
@@ -37,6 +38,7 @@ class GameController:
         self.run()
 
     def run(self) -> None:
+        """Game loop with user prompting"""
         while self.running:
             raw = self.ui.prompt()
             try:
@@ -50,6 +52,11 @@ class GameController:
                 self.advanceLevel()
 
     def handleCommand(self, cmd: command_module.Command) -> None:
+        """handles user input
+
+        params:
+            cmd: command to handle
+        """
         if cmd.verb == "move":
             oldPosition = self.person.getPosition()
             message = self.currentLevel.handleMove(self.person, cmd.arg)
@@ -67,7 +74,10 @@ class GameController:
             self.ui.print("ENERGY: " + str(self.person.getEnergy()))
 
         elif cmd.verb == "sonar":
-            message = self.person.sonar(self.currentLevel.map)
+            message = self.person.sonar(self.currentLevel.map, cmd.arg)
+            response = self.currentLevel.onSonar(self.person)
+            if response:
+                message += f"\n{response}"
             self.ui.print(f"{message}\nEnergy: {self.person.getEnergy()}")
 
         elif cmd.verb in ("end", "quit"):
@@ -84,6 +94,7 @@ class GameController:
         raise NotImplementedError("GameController.loadCheckpoint is not implemented yet")
 
     def advanceLevel(self) -> None:
+        """Continues game to next level within level list and checks for final level to end game"""
         currentLevelIndex = self.levels.index(self.currentLevel)
         if currentLevelIndex < len(self.levels) - 1:
             self.currentLevel = self.levels[currentLevelIndex + 1]
@@ -93,6 +104,7 @@ class GameController:
             self.endGame(won=True)      
 
     def handleDeath(self) -> None:
+        """handles death and prompts user to restart game"""
         self.ui.print("You died! Your energy reached zero.")
 
         while True:

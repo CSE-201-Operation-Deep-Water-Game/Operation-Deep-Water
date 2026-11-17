@@ -29,31 +29,16 @@ class TutorialLevel(Level):
         self.hints: list[str] = hints
 
     def handleMove(self, person: person_module.Person, direction: str) -> str:
-        directions = {
-            "up": (0, 1),
-            "down": (0, -1),
-            "left": (-1, 0),
-            "right": (1, 0),
-        }
-        if direction not in directions:
-            return "Invalid direction."
+        invalidMoveResponse = self.validateMove(person, direction)
+        if direction in self.DIRECTIONS:
+            person.decreaseEnergy(1)
+        if invalidMoveResponse:
+            return invalidMoveResponse
 
-        dx, dy = directions[direction]
+        dx, dy = self.DIRECTIONS[direction]
         x, y = person.positionX + dx, person.positionY + dy
-        if not self.map.inBounds(x, y):
-            person.decreaseEnergy(1)
-            return "You bumped into a wall."
-
-        destination = self.map.getTile(x, y)
-        if not destination.isPassable():
-            person.decreaseEnergy(1)
-            message = "You bumped into a wall."
-            if destination.getDescription():
-                message += f" {destination.getDescription()}"
-            return message
-
         person.setPosition(x, y)
-        person.decreaseEnergy(1)
+        destination = self.map.getTile(x, y)
 
         if destination.tileType == "exit":
             self.markComplete()
