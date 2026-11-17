@@ -102,11 +102,7 @@ class GameController:
             if choice in ("yes", "y"):
                 self.person.resetEnergy()
 
-                for level in self.levels:
-                    level.complete = False
-
-                self.currentLevel = self.levels[0]
-                self.ui.showBriefing()
+                # Restart the level you died on, not the whole game.
                 self.ui.print(self.currentLevel.start(self.person))
 
                 self.running = True
