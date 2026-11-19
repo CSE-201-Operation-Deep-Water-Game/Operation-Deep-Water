@@ -26,14 +26,26 @@ class GameController:
         self.running: bool = running
 
     def start(self) -> None:
-        """Start the game loop."""
+        """Start a new game or resume from a checkpoint password."""
         self.ui.showBriefing()
+
+        if self.checkpoints.passwords:
+            while True:
+                self.ui.print(
+                    "Enter a checkpoint password, or press Enter to start a new game."
+                )
+                password = self.ui.prompt().strip()
+                if not password:
+                    break
+                if self.loadCheckpoint(password):
+                    self.running = True
+                    self.run()
+                    return
+                self.ui.print("Invalid checkpoint password.")
+
         self.person.resetEnergy()
-
         self.currentLevel = self.levels[0]
-        intro = self.currentLevel.start(self.person)
-        self.ui.print(intro)
-
+        self.ui.print(self.currentLevel.start(self.person))
         self.running = True
         self.run()
 
@@ -90,18 +102,33 @@ class GameController:
 
 
     def loadCheckpoint(self, password: str) -> bool:
-        """TODO: Implement loadCheckpoint."""
-        raise NotImplementedError("GameController.loadCheckpoint is not implemented yet")
+        """Start the level associated with the supplied password."""
+        if not self.checkpoints.isValid(password):
+            return False
+
+        levelIndex = self.checkpoints.validate(password)
+        if not 0 <= levelIndex < len(self.levels):
+            return False
+
+        self.currentLevel = self.levels[levelIndex]
+        self.person.resetEnergy()
+        self.ui.print(self.currentLevel.start(self.person))
+        return True
 
     def advanceLevel(self) -> None:
-        """Continues game to next level within level list and checks for final level to end game"""
-        currentLevelIndex = self.levels.index(self.currentLevel)
-        if currentLevelIndex < len(self.levels) - 1:
-            self.currentLevel = self.levels[currentLevelIndex + 1]
-            self.ui.print(self.currentLevel.start(self.person))
-            self.person.resetEnergy()
-        else:
-            self.endGame(won=True)      
+        """Enter the next level or end the game after the final exit."""
+        nextLevelIndex = self.levels.index(self.currentLevel) + 1
+        if nextLevelIndex >= len(self.levels):
+            self.endGame(won=True)
+            return
+
+        self.currentLevel = self.levels[nextLevelIndex]
+        self.person.resetEnergy()
+        self.ui.print(self.currentLevel.start(self.person))
+
+        password = self.checkpoints.award(nextLevelIndex)
+        if password is not None:
+            self.ui.print(f"Checkpoint password: {password}")
 
     def handleDeath(self) -> None:
         """handles death and prompts user to restart game"""

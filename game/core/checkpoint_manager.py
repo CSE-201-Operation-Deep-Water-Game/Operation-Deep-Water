@@ -8,14 +8,15 @@ class CheckpointManager:
     ) -> None:
         self.passwords: dict[str, int] = passwords
 
-    def award(self, levelIndex: int) -> str:
-        """TODO: Implement award."""
-        raise NotImplementedError("CheckpointManager.award is not implemented yet")
+    def award(self, levelIndex: int) -> str | None:
+        """Return the password for this level, if one is configured."""
+        for password, index in self.passwords.items():
+            if index == levelIndex:
+                return password
+        return None
 
     def isValid(self, password: str) -> bool:
-        """TODO: Implement isValid."""
-        raise NotImplementedError("CheckpointManager.isValid is not implemented yet")
+        return password.strip().upper() in self.passwords
 
     def validate(self, password: str) -> int:
-        """TODO: Implement validate."""
-        raise NotImplementedError("CheckpointManager.validate is not implemented yet")
+        return self.passwords[password.strip().upper()]

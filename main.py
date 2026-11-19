@@ -48,7 +48,10 @@ def main() -> None:
         }
     )
     ui = TerminalInterface(parser=parser)
-    checkpoints = CheckpointManager(passwords={})
+    checkpoints = CheckpointManager(passwords={
+        "WAVE": 1,
+        "PUZZLE": 2,
+    })
 
     tutorial = buildTutorialLevel()
     waveRoom = buildWaveRoom()
