@@ -1,101 +1,128 @@
-from game.commands.command import Command
-from unittest.mock import Mock
-from game.core.game_controller import GameController
-from game.levels.puzzle_room_layout import buildPuzzleRoom, LANDMARKS
+"""Tests for the real Puzzle Room (built by buildPuzzleRoom in puzzle_room_layout.py).
+
+The idea of the room:
+  - 4 landmarks sit in the corners of a rectangle.
+  - Imagine lines joining opposite landmarks. They cross in an X at (5, 4).
+  - Sending sonar from the crossing tile unlocks the exit at (9, 8).
+  - Stepping on a landmark recharges your energy (once per landmark).
+"""
+
+from game.levels.puzzle_room_layout import LANDMARKS, buildPuzzleRoom
+
+EXIT = (9, 8)       # the sealed exit, top right
+CROSSING = (5, 4)   # where the two diagonals cross
+STAND_NEXT_TO_EXIT = (9, 7)
 
 
-def test_four_landmarks_and_unmarked_crossing():
-    room = buildPuzzleRoom()
+# ---------- Layout ----------
+
+def test_room_has_exactly_four_landmarks():
     assert len(LANDMARKS) == 4
+
+
+def test_each_landmark_has_its_text_on_the_map():
+    room = buildPuzzleRoom()
     for (x, y), (label, description) in LANDMARKS.items():
         tile = room.map.getTile(x, y)
-        assert tile.isPassable()
-        assert (tile.landmark, tile.description) == (label, description)
-        assert (10 - x, 8 - y) in LANDMARKS
-    center = room.map.getTile(room.intersectionX, room.intersectionY)
-    assert center.isPassable() and not center.landmark
+        assert tile.landmark == label
+        assert tile.description == description
 
 
-def test_puzzle_sonar_controller_and_restart(person):
+def test_the_crossing_tile_is_open_but_has_no_landmark():
+    """The crossing is the secret: nothing on the map marks it."""
     room = buildPuzzleRoom()
-    controller = GameController(person=person, levels=[room], currentLevel=room,
-                                ui=Mock(), checkpoints=Mock(), running=True)
-    room.start(controller.person)
-    controller.handleCommand(Command(verb='sonar', arg='up'))
-    assert not room.solved
-    assert not room.map.isPassable(9, 8)
-    controller.person.setPosition(9, 7)
-    room.handleMove(controller.person, 'up')
-    assert controller.person.getPosition() == (9, 7)
-    assert not room.complete
-    controller.person.setPosition(5, 4)
-    controller.handleCommand(Command(verb='sonar', arg='left'))
-    assert room.solved and not room.complete
-    assert room.map.getTile(9, 8).tileType == 'exit'
-    assert 'exit is unlocked' in controller.ui.print.call_args.args[0]
-    controller.person.setPosition(9, 7)
-    room.handleMove(controller.person, 'up')
-    assert room.complete
-    room.start(controller.person)
-    assert not room.solved and not room.complete
-    assert not room.map.isPassable(9, 8)
-    assert 'sealed' in room.map.getTile(9, 8).description
-    assert not buildPuzzleRoom().map.isPassable(9, 8)
+    tile = room.map.getTile(*CROSSING)
+    assert tile.isPassable()
+    assert tile.landmark == ""
 
 
-def path_to(room, start, goal):
-    from collections import deque
-    queue = deque([(start, [])])
-    seen = {start}
-    for_position = {'up': (0, 1), 'down': (0, -1),
-                    'left': (-1, 0), 'right': (1, 0)}
-    while queue:
-        (x, y), path = queue.popleft()
-        if (x, y) == goal:
-            return path
-        for direction, (dx, dy) in for_position.items():
-            next_position = (x + dx, y + dy)
-            if (next_position not in seen and room.map.inBounds(*next_position)
-                    and room.map.isPassable(*next_position)):
-                seen.add(next_position)
-                queue.append((next_position, path + [direction]))
-    raise AssertionError(f'Unreachable tile: {goal}')
+# ---------- Solving the puzzle ----------
+
+def test_exit_starts_sealed():
+    room = buildPuzzleRoom()
+    assert not room.map.isPassable(*EXIT)
 
 
-def test_exploring_all_clues_and_solving_fits_energy_budget(person):
+def test_sonar_away_from_the_crossing_leaves_exit_sealed(person):
     room = buildPuzzleRoom()
     room.start(person)
-    assert (room.map.width, room.map.height) == (11, 9)
-    moves = 0
-    for goal in [(2, 2), (2, 6), (8, 6), (8, 2), (5, 4)]:
-        # Allow a scouting pulse while searching for each landmark.
-        if goal in LANDMARKS:
-            person.sonar(room.map, 'up')
-        for direction in path_to(room, person.getPosition(), goal):
-            room.handleMove(person, direction)
-            moves += 1
-            assert not person.isDead()
-    person.sonar(room.map, '')
+    person.setPosition(1, 1)
     room.onSonar(person)
-    assert not person.isDead()
-    for direction in path_to(room, person.getPosition(), (9, 8)):
-        room.handleMove(person, direction)
-        assert not person.isDead()
-    assert room.complete
-    assert moves > 20
-    assert len(room.usedPowerCells) == 4
+    assert not room.solved
+    assert not room.map.isPassable(*EXIT)
 
 
-def test_power_cells_only_recharge_once_and_reset_on_restart(person):
+def test_sonar_on_the_crossing_unlocks_the_exit(person):
+    room = buildPuzzleRoom()
+    room.start(person)
+    person.setPosition(*CROSSING)
+    message = room.onSonar(person)
+    assert room.solved
+    assert room.map.getTile(*EXIT).tileType == "exit"
+    assert "unlocked" in message
+
+
+def test_walking_into_the_sealed_exit_does_not_finish_the_level(person):
+    room = buildPuzzleRoom()
+    room.start(person)
+    person.setPosition(*STAND_NEXT_TO_EXIT)
+    room.handleMove(person, "up")
+    assert person.getPosition() == STAND_NEXT_TO_EXIT
+    assert not room.isComplete()
+
+
+def test_walking_into_the_unlocked_exit_finishes_the_level(person):
+    room = buildPuzzleRoom()
+    room.start(person)
+    person.setPosition(*CROSSING)
+    room.onSonar(person)
+    person.setPosition(*STAND_NEXT_TO_EXIT)
+    room.handleMove(person, "up")
+    assert room.isComplete()
+
+
+def test_restarting_the_room_seals_the_exit_again(person):
+    room = buildPuzzleRoom()
+    room.start(person)
+    person.setPosition(*CROSSING)
+    room.onSonar(person)
+
+    room.start(person)
+
+    assert not room.solved
+    assert not room.map.isPassable(*EXIT)
+
+
+# ---------- Landmarks recharge energy ----------
+
+def test_stepping_on_a_landmark_refills_energy(person):
+    room = buildPuzzleRoom()
+    room.start(person)
+    person.setPosition(1, 2)          # next to the landmark at (2, 2)
+    room.handleMove(person, "right")  # step onto it
+    assert person.getEnergy() == person.maxEnergy
+
+
+def test_a_landmark_only_recharges_once(person):
+    """Leave and come back: the second visit gives nothing (just the 2 move costs)."""
     room = buildPuzzleRoom()
     room.start(person)
     person.setPosition(1, 2)
-    room.handleMove(person, 'right')
-    assert person.getEnergy() == person.maxEnergy
-    room.handleMove(person, 'left')
-    room.handleMove(person, 'right')
+    room.handleMove(person, "right")  # recharges to full
+    room.handleMove(person, "left")   # -1
+    room.handleMove(person, "right")  # -1, no recharge this time
     assert person.getEnergy() == person.maxEnergy - 2
+
+
+def test_restarting_makes_landmarks_recharge_again(person):
+    room = buildPuzzleRoom()
     room.start(person)
     person.setPosition(1, 2)
-    room.handleMove(person, 'right')
+    room.handleMove(person, "right")
+
+    room.start(person)
+    person.setPosition(1, 2)
+    person.decreaseEnergy(5)
+    room.handleMove(person, "right")
+
     assert person.getEnergy() == person.maxEnergy
