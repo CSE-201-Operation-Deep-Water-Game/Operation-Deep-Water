@@ -5,7 +5,7 @@ import game.core.checkpoint_manager as checkpoint_manager_module
 import game.core.person as person_module
 import game.levels.level as level_module
 import game.ui.terminal_interface as terminal_interface_module
-
+from game.levels.final_level import FinalLevel
 
 class GameController:
     def __init__(
@@ -59,9 +59,18 @@ class GameController:
                 self.ui.print("Unrecognized command. To move, enter: move up, move down, move left, or move right.")
                 continue
             self.handleCommand(command)
+
             if self.currentLevel.complete:
                 self.ui.print("You reached the exit.")
                 self.advanceLevel()
+
+            if isinstance(self.currentLevel, FinalLevel):
+                if self.currentLevel.isTimerOver:
+                    "Bryan has caught up to you. You feel his grip slowly crumple your submarine before everything goes black."
+                    self.handleDeath()
+
+
+
 
     def handleCommand(self, cmd: command_module.Command) -> None:
         """handles user input
@@ -155,12 +164,12 @@ class GameController:
             self.ui.print("Please enter yes or no.")
 
     def endGame(self, won: bool) -> None:
-        """Minimal ending: print a result and stop the game loop.
-
-        Replace the wording once the final level and real ending exist.
-        """
         if won:
-            self.ui.print("You made it through the trench. Mission complete!")
+            self.ui.print("You grab the NAYRB and bring it into the submarine. Before you can even think about what"
+                          "has just happened, an underwater geyser pushes from under you all the way to the surface."
+                          "You're unsure what to do next, but you've made it out alive. A radio signal buzzes on your"
+                          "notification device. It's time to go home."
+                          "YOU WON!")
         else:
             self.ui.print("The mission has failed.")
         self.ui.print("Thanks for playing!")
