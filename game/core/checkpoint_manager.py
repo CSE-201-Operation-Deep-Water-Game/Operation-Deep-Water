@@ -16,6 +16,7 @@ class CheckpointManager:
         return None
 
     def isValid(self, password: str) -> bool:
+        """Check if the password is valid."""
         return password.strip().upper() in self.passwords
 
     def validate(self, password: str) -> int:

@@ -6,6 +6,7 @@ from game.core.checkpoint_manager import CheckpointManager
 from game.core.game_controller import GameController
 from game.core.person import Person
 from game.levels.final_level import FinalLevel
+from game.levels.final_level_layout import buildFinalLevel
 from game.levels.level import Level
 from game.levels.puzzle_level import PuzzleLevel
 from game.levels.puzzle_room_layout import buildPuzzleRoom
@@ -41,6 +42,7 @@ def main() -> None:
             "move": "move",
             "status": "status",
             "sonar": "sonar",
+            "grab": "grab",
             "quit": "quit",
             "end": "end",
         }
@@ -49,15 +51,17 @@ def main() -> None:
     checkpoints = CheckpointManager(passwords={
         "WAVE": 1,
         "PUZZLE": 2,
+        "BRYAN": 3
     })
 
     tutorial = buildTutorialLevel()
     waveRoom = buildWaveRoom()
     puzzleRoom = buildPuzzleRoom()
+    finalLevel = buildFinalLevel()
 
     game_controller = GameController(
         person=player,
-        levels=[tutorial, waveRoom, puzzleRoom],
+        levels=[tutorial, waveRoom, puzzleRoom, finalLevel],
         currentLevel=puzzleRoom,
         ui=ui,
         checkpoints=checkpoints,

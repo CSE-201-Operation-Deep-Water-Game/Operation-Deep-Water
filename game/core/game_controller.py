@@ -58,18 +58,18 @@ class GameController:
             except ValueError:
                 self.ui.print("Unrecognized command. To move, enter: move up, move down, move left, or move right.")
                 continue
+            if (
+                isinstance(self.currentLevel, FinalLevel)
+                and self.currentLevel.isTimerOver
+                and command.verb not in ("end", "quit")
+            ):
+                self.handleDeath("BRYAN caught up to you and crushed your submarine.")
+                continue
             self.handleCommand(command)
 
             if self.currentLevel.complete:
                 self.ui.print("You reached the exit.")
                 self.advanceLevel()
-
-            if isinstance(self.currentLevel, FinalLevel):
-                if self.currentLevel.isTimerOver:
-                    "Bryan has caught up to you. You feel his grip slowly crumple your submarine before everything goes black."
-                    self.handleDeath()
-
-
 
 
     def handleCommand(self, cmd: command_module.Command) -> None:
@@ -128,7 +128,8 @@ class GameController:
         """Enter the next level or end the game after the final exit."""
         nextLevelIndex = self.levels.index(self.currentLevel) + 1
         if nextLevelIndex >= len(self.levels):
-            self.endGame(won=True)
+            won = not isinstance(self.currentLevel, FinalLevel) or self.currentLevel.hasArtifact
+            self.endGame(won=won)
             return
 
         self.currentLevel = self.levels[nextLevelIndex]
@@ -139,9 +140,9 @@ class GameController:
         if password is not None:
             self.ui.print(f"Checkpoint password: {password}")
 
-    def handleDeath(self) -> None:
+    def handleDeath(self, message: str = "You died! Your energy reached zero.") -> None:
         """handles death and prompts user to restart game"""
-        self.ui.print("You died! Your energy reached zero.")
+        self.ui.print(message)
 
         while True:
             self.ui.print("Would you like to restart? (yes/no)")
@@ -150,7 +151,6 @@ class GameController:
             if choice in ("yes", "y"):
                 self.person.resetEnergy()
 
-                # Restart the level you died on, not the whole game.
                 self.ui.print(self.currentLevel.start(self.person))
 
                 self.running = True
@@ -165,12 +165,17 @@ class GameController:
 
     def endGame(self, won: bool) -> None:
         if won:
-            self.ui.print("You grab the NAYRB and bring it into the submarine. Before you can even think about what"
-                          "has just happened, an underwater geyser pushes from under you all the way to the surface."
-                          "You're unsure what to do next, but you've made it out alive. A radio signal buzzes on your"
-                          "notification device. It's time to go home."
-                          "YOU WON!")
-        else:
-            self.ui.print("The mission has failed.")
+            self.ui.print(
+                "Mission complete. An underwater geyser carries your submarine to the "
+                "surface. The NAYRB is secure. A radio signal breaks through the static. "
+                "It's time to go home. YOU WON!"
+            )
+        elif isinstance(self.currentLevel, FinalLevel) and self.currentLevel.isComplete():
+            self.ui.print(
+                "You reach the surface empty-handed."
+                "The NAYRB still below. The mission has failed."
+                "Your commander is not going to be happy about this."
+            )
+
         self.ui.print("Thanks for playing!")
         self.running = False

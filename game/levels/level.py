@@ -64,7 +64,7 @@ class Level(ABC):
                 message += f" {tile.getDescription()}"
             return message
 
-        return "You moved."
+        return ""
 
     def markComplete(self) -> None:
         self.complete = True

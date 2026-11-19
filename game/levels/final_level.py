@@ -1,15 +1,17 @@
 from __future__ import annotations
 
-from operator import truediv
+import threading
+from time import monotonic
 
 from game.levels.level import Level
 
 import game.core.person as person_module
 import game.world.map as map_module
-import threading
 
 
 class FinalLevel(Level):
+    CHASE_SECONDS = 30
+
     def __init__(
         self,
         *,
@@ -22,7 +24,9 @@ class FinalLevel(Level):
         artifactX: int,
         artifactY: int,
         isTimerStarted: bool,
-        isTimerOver: bool
+        isTimerOver: bool,
+        timer: threading.Timer
+
     ) -> None:
         super().__init__(
             name=name,
@@ -32,11 +36,23 @@ class FinalLevel(Level):
             introText=introText,
             complete=complete,
         )
+        self.timer = None
         self.isTimerOver = False
-        self.isTimerStarted = True
+        self.isTimerStarted = False
         self.artifactX: int = artifactX
         self.artifactY: int = artifactY
+        self.hasArtifact = False
 
+
+    def start(self, person: person_module.Person) -> str:
+        if self.timer is not None:
+            self.timer.cancel()
+            self.timer = None
+
+        self.isTimerOver = False
+        self.isTimerStarted = False
+        self.hasArtifact = False
+        return super().start(person)
 
     def handleMove(self, person: person_module.Person, direction: str) -> str:
         if not self.isTimerStarted:
@@ -57,17 +73,28 @@ class FinalLevel(Level):
             self.markComplete()
             return "You reached the exit."
 
-        message = "You moved." + (f" {tile.getDescription()}" if tile.getDescription() else "")
+        description = tile.getDescription()
+        message = f"You moved. {description}" if description else "You moved."
+        if (x, y) == self.getArtifactPosition() and not self.hasArtifact:
+            message += f"\n{self.grabArtifact()}"
+
+        return message
+
+    def grabArtifact(self) -> str:
+        self.hasArtifact = True
+        return "You grab the NAYRB and secure it inside the submarine."
 
     def getArtifactPosition(self) -> tuple[int, int]:
         return self.artifactX, self.artifactY
 
-    def on_timer_end(self):
+    def onTimerEnd(self) -> None:
         self.isTimerOver = True
 
-    def startTimer(self):
-        timer = threading.Timer(5.0, self.on_timer_end)
-        timer.start()
+    def startTimer(self) -> None:
+        if self.timer is not None:
+            self.timer.cancel()
+
+        self.isTimerOver = False
         self.isTimerStarted = True
-
-
+        self.timer = threading.Timer(self.CHASE_SECONDS, self.onTimerEnd)
+        self.timer.start()
