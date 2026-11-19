@@ -28,7 +28,7 @@ class CommandParser:
         verb = self.validVerbs[first]
         arg = parts[1] if len(parts) > 1 else ""
 
-        if verb == "move":
+        if verb in ("move", "sonar"):
             arg = arg.lower()
 
         return command_module.Command(verb=verb, arg=arg)

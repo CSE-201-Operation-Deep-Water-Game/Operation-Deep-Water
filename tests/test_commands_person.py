@@ -29,6 +29,13 @@ def test_parser_ignores_capitals_and_extra_spaces(parser):
     assert command.arg == "left"
 
 
+def test_parser_lowercases_the_sonar_direction(parser):
+    """'sonar UP' must give the direction 'up', same as 'sonar up'."""
+    command = parser.parse("sonar UP")
+    assert command.verb == "sonar"
+    assert command.arg == "up"
+
+
 def test_parser_treats_a_bare_direction_as_a_move(parser):
     """Typing just 'up' is a shortcut for 'move up'."""
     command = parser.parse("up")
