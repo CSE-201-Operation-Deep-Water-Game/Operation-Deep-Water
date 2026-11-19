@@ -39,8 +39,6 @@ def main() -> None:
     parser = CommandParser(
         validVerbs={
             "move": "move",
-            "look": "look",
-            "help": "help",
             "status": "status",
             "sonar": "sonar",
             "quit": "quit",

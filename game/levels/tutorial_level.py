@@ -48,8 +48,3 @@ class TutorialLevel(Level):
             return f"You moved. {destination.getDescription()}"
 
         return "You moved."
-
-
-    def getHint(self) -> str:
-        """TODO: Implement getHint."""
-        raise NotImplementedError("TutorialLevel.getHint is not implemented yet")

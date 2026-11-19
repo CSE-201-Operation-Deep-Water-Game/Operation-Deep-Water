@@ -81,14 +81,6 @@ class Wave(Tile):
 
         return path
 
-    def getDestination(self, map: map_module.Map) -> tuple[int, int]:
-        """Return where a player standing on this tile ends up after the push.
-
-        A fully blocked push leaves them on this tile.
-        """
-        path = self.getPath(map)
-        return path[-1] if path else (self.x, self.y)
-
     def getPushMessage(self) -> str:
         """Return the vague message shown when the wave pushes the player.
 

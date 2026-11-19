@@ -45,11 +45,3 @@ class TerminalInterface:
     def askNewOrPassword(self) -> str:
         """TODO: Implement askNewOrPassword."""
         raise NotImplementedError("TerminalInterface.askNewOrPassword is not implemented yet")
-
-    def showHelp(self, lines: list[str]) -> None:
-        """TODO: Implement showHelp."""
-        raise NotImplementedError("TerminalInterface.showHelp is not implemented yet")
-
-    def showStatus(self, energy: int) -> None:
-        """TODO: Implement showStatus."""
-        raise NotImplementedError("TerminalInterface.showStatus is not implemented yet")
